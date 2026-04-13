@@ -90,6 +90,17 @@ class WebInputsPage extends WebInputsPageSelectors {
         await (await this.inputPasswordField).waitForDisplayed();
         return (await this.inputPasswordField).getAttribute('type');
     }
+
+    async fillInputDate(value: string | any): Promise<void> {
+        await (await this.inputDateField).waitForDisplayed();
+        await (await this.inputDateField).scrollIntoView();
+        await (await this.inputDateField).setValue(value)
+    }
+
+    async getDateFieldText(): Promise<string> {
+        await (await this.outputDateField).waitForDisplayed();
+        return (await this.outputDateField).getText();
+    }
 }
 
 export default new WebInputsPage();
