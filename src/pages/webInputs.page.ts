@@ -74,6 +74,22 @@ class WebInputsPage extends WebInputsPageSelectors {
         await (await this.outputTextField).waitForDisplayed();
         return (await this.outputTextField).getText();
     }
+
+    async fillInputPassword(value: string|number): Promise<void> {
+        await (await this.inputPasswordField).waitForDisplayed();
+        await (await this.inputPasswordField).scrollIntoView();
+        await (await this.inputPasswordField).setValue(value);
+    }
+
+    async getOutputPasswordText(): Promise<string> {
+        await (await this.outputPasswordField).waitForDisplayed();
+        return (await this.outputPasswordField).getText();
+    }
+
+    async getPasswordInputType(): Promise<string> {
+        await (await this.inputPasswordField).waitForDisplayed();
+        return (await this.inputPasswordField).getAttribute('type');
+    }
 }
 
 export default new WebInputsPage();
