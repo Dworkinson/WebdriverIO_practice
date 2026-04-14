@@ -6,7 +6,7 @@ class SecurePage {
     alert = CommonComponent;
 
     async open(): Promise<void> {
-        await browser.url('https://practice.expandtesting.com/secure');
+        await browser.url('/secure');
     }
 
     private get logoutBtn(): Promise<WebdriverIO.Element> {

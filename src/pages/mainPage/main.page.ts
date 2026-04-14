@@ -279,7 +279,7 @@ class MainPageSelectors {
 
 class MainPage extends MainPageSelectors {
     async open(): Promise<void> {
-        await browser.url('https://practice.expandtesting.com/')
+        await browser.url('/');
     }
 
     async clickWebInputs(): Promise<void> {
