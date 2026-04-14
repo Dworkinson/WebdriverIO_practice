@@ -1,4 +1,6 @@
+import { browser } from '@wdio/globals'
 import { $ } from '@wdio/globals'
+
 
 class MainPageSelectors {
     protected get webInputs(): Promise<WebdriverIO.Element> {

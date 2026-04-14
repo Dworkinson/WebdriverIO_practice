@@ -1,3 +1,5 @@
+import { $ } from '@wdio/globals';
+
 class WebInputsPageSelectors {
     protected get displayInputsBtn(): Promise<WebdriverIO.Element> {
         return $('[id="btn-display-inputs"]');
