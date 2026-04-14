@@ -24,6 +24,9 @@ export const config: Options.Testrunner = {
                 '--disable-sync',
                 '--disable-extensions'
             ],
+            prefs: {
+                // preventing "weak password" warning
+                'profile.password_manager_leak_detection': false            }
         }
     }],
 

@@ -1,0 +1,14 @@
+{
+  "wrong_username_alert": {
+    "us": "Your username is invalid!"
+  },
+  "wrong_password_alert": {
+    "us": "Your password is invalid!"
+  },
+  "success_alert": {
+    "us": "You logged into a secure area!"
+  },
+  "unauthorized_alert": {
+    "us": "You must login to view the secure area!"
+  }
+}

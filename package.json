@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "wdio": "wdio src/config/wdio.conf.ts"
+    "wdio": "wdio src/config/wdio.conf.ts",
+    "inputsTest": "wdio src/config/wdio.conf.ts --spec inputs.spec.ts",
+    "loginTest": "wdio src/config/wdio.conf.ts --spec login.spec.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
