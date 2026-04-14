@@ -1,5 +1,5 @@
-import MainPage from "../../pages/mainPage/main.page";
-import WebInputsPage from "../../pages/webInputs.page";
+import MainPage from "@pages/mainPage/main.page";
+import WebInputsPage from "@pages/webInputs/webInputs.page";
 import {expect} from "chai"
 import RandExp from "randexp";
 import { faker } from '@faker-js/faker';
@@ -55,7 +55,7 @@ describe('Number inputs: ', () => {
 
         await MainPage.open();
         await MainPage.clickWebInputs();
-    })
+    });
 
     it('positive number could be inserted', async() => {
         let number = randomNumber(false, false);
@@ -108,8 +108,7 @@ describe('Number inputs: ', () => {
 
     afterEach(async () => {
         await WebInputsPage.clearInputs();
-
-    })
+    });
 });
 
 describe('Text inputs: ', () => {

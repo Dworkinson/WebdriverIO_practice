@@ -8,8 +8,12 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "types" : [
-      "mocha", "@wdio/types/globals"
-    ]
+      "mocha", "@wdio/types/globals", "node"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@pages/*": ["./src/pages/*"]
+    }
   },
   "include": ["src"]
 }
