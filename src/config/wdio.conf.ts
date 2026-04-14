@@ -15,6 +15,7 @@ export const config: Options.Testrunner = {
     exclude: [
     ],
     maxInstances: 10,
+    services: ['chromedriver'],
     capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
