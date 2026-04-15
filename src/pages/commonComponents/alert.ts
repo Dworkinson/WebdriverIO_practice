@@ -1,7 +1,7 @@
 import { $ } from '@wdio/globals'
 
 
-class CommonComponent {
+class Alert {
     private get alert(): Promise<WebdriverIO.Element> {
         return $('[id="flash"]');
     }
@@ -17,4 +17,4 @@ class CommonComponent {
     }
 }
 
-export default new CommonComponent();
+export default new Alert();
