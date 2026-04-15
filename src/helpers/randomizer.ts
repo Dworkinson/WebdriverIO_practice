@@ -17,11 +17,9 @@ export function randomExponential() {
         : (randomNumber / 1000).toExponential(3);
 }
 
-export function randomString(fullRandom?: boolean): string {
-    const fullRandomRex = new RandExp(/[!-~]{15}/);
-    const symbolAlphabeticalRex = new RandExp(/[:-zA-~!-*,/]{15}/);
-    let rex = fullRandom ? fullRandomRex : symbolAlphabeticalRex;
-    return rex.gen()
+export function randomString(regExp: string, length: number): string {
+    const randExpInstance = new RandExp(String.raw`${regExp}{${length}}`);
+    return randExpInstance.gen()
 }
 
 export function randomDate(): Date {

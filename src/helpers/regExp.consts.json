@@ -1,0 +1,10 @@
+{
+  "NEGATIVE_TEST__NUMBER_INPUT": {
+    "value": "[ -*/:-DF-df-~]",
+    "description": "alpha symbolic except such symbols: e,.+E-"
+  },
+  "TEXT_INPUT": {
+    "value": "[ -~]",
+    "description": "all printable ASCII characters + space"
+  }
+}

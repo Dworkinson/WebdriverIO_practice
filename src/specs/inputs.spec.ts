@@ -2,6 +2,7 @@ import MainPage from "@pages/mainPage/main.page";
 import WebInputsPage from "@pages/webInputs/webInputs.page";
 import {expect} from "chai"
 import {randomNumber, randomExponential, randomString, randomDate} from "@helpers/randomizer";
+import * as consts from '@helpers/regExp.consts.json'
 
 function dateToString(date: Date): string {
     return date.toLocaleDateString('uk', { day: 'numeric', month: 'numeric', year: 'numeric' });
@@ -68,7 +69,7 @@ describe('Number inputs: ', () => {
     });
 
     it('text and symbols could not be inserted', async() => {
-        let text = randomString();
+        let text = randomString(consts.NEGATIVE_TEST__NUMBER_INPUT.value, 15);
 
         await WebInputsPage.fillInputNumber(text);
         await WebInputsPage.displayInputs();
@@ -91,7 +92,7 @@ describe('Text inputs: ', () => {
 
     it('any text could be inserted', async () => {
         // site has actual bug - "output password" could be read as HTML element, so need to avoid characters < >
-        let text = randomString(true).replace(/[<>]/g, "");
+        let text = randomString(consts.TEXT_INPUT.value, 15).replace(/[<>]/g, "");
 
         await WebInputsPage.fillInputText(text);
         await WebInputsPage.displayInputs();
@@ -115,7 +116,7 @@ describe('Password inputs: ', () => {
 
     it('any text could be a password', async () => {
         // site has actual bug - "output password" could be read as HTML element, so need to avoid characters < >
-        const password = randomString(true).replace(/[<>]/g, "");
+        const password = randomString(consts.TEXT_INPUT.value, 15).replace(/[<>]/g, "");
 
         await WebInputsPage.fillInputPassword(password);
         await WebInputsPage.displayInputs();
@@ -124,7 +125,7 @@ describe('Password inputs: ', () => {
 
     it('password should not be displayed', async () => {
         // site has actual bug - "output password" could be read as HTML element, so need to avoid characters < >
-        const password = randomString(true).replace(/[<>]/g, "");
+        const password = randomString(consts.TEXT_INPUT.value, 15).replace(/[<>]/g, "");
 
         await WebInputsPage.fillInputPassword(password);
         expect(await WebInputsPage.getPasswordInputType()).to.be.equal("password");
@@ -156,7 +157,7 @@ describe('Date inputs: ', () => {
     });
 
     it('invalid date could not be inserted', async () => {
-        const invalidDate = randomString();
+        const invalidDate = randomString(consts.TEXT_INPUT.value, 15).replace(/[<>]/g, "");
 
         await WebInputsPage.fillInputDate(invalidDate);
         await WebInputsPage.displayInputs();
