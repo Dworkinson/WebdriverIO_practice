@@ -1,5 +1,4 @@
 import { $ } from '@wdio/globals'
-import Alert from "../commonComponents/alert";
 
 
 class LoginPageSelectors {
@@ -17,8 +16,6 @@ class LoginPageSelectors {
 }
 
 class LoginPage extends LoginPageSelectors {
-    alert = Alert;
-
     async setUsername(username: string): Promise<void> {
         await (await this.usernameInput).waitForDisplayed();
         await (await this.usernameInput).setValue(username);

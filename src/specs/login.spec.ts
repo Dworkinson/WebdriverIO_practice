@@ -2,6 +2,7 @@ import {expect} from "chai"
 import MainPage from "@pages/mainPage/main.page";
 import LoginPage from "@pages/loginPage/login.page";
 import SecurePage from "@pages/loginPage/secure.page";
+import Alert from "@pages/commonComponents/alert";
 
 import { randomString } from "@helpers/randomizer";
 
@@ -23,11 +24,11 @@ describe("Login: ", async () => {
         expect(loginUrl).to.include("/login");
 
         await LoginPage.login(data.username, data.password);
-        expect(await SecurePage.alert.isAlertDisplayed()).to.be.true;
+        expect(await Alert.isAlertDisplayed()).to.be.true;
 
         const url = await browser.getUrl();
         expect(url).to.include("/secure");
-        expect(await LoginPage.alert.getAlertText()).to.be.equal(dict.success_alert.us);
+        expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
 
         await SecurePage.clickOnLogoutBtn();
     });
@@ -37,8 +38,8 @@ describe("Login: ", async () => {
         expect(loginUrl).to.include("/login");
 
         await LoginPage.login(randomString(), data.password);
-        expect(await LoginPage.alert.isAlertDisplayed()).to.be.true;
-        expect(await LoginPage.alert.getAlertText()).to.be.equal(dict.wrong_username_alert.us);
+        expect(await Alert.isAlertDisplayed()).to.be.true;
+        expect(await Alert.getAlertText()).to.be.equal(dict.wrong_username_alert.us);
     });
 
     it('should not be able to login with wrong password', async () => {
@@ -46,8 +47,8 @@ describe("Login: ", async () => {
         expect(loginUrl).to.include("/login");
 
         await LoginPage.login(data.username, randomString());
-        expect(await LoginPage.alert.isAlertDisplayed()).to.be.true;
-        expect(await LoginPage.alert.getAlertText()).to.be.equal(dict.wrong_password_alert.us);
+        expect(await Alert.isAlertDisplayed()).to.be.true;
+        expect(await Alert.getAlertText()).to.be.equal(dict.wrong_password_alert.us);
     });
 
     it('unauthorized user should not be able to access secure page', async () => {
@@ -55,7 +56,11 @@ describe("Login: ", async () => {
 
         const url = await browser.getUrl();
         expect(url).to.include("/login").and.not.include("/secure");
-        expect(await LoginPage.alert.isAlertDisplayed()).to.be.true;
-        expect(await LoginPage.alert.getAlertText()).to.be.equal(dict.unauthorized_alert.us);
+        expect(await Alert.isAlertDisplayed()).to.be.true;
+        expect(await Alert.getAlertText()).to.be.equal(dict.unauthorized_alert.us);
+    });
+
+    afterEach(async () => {
+        await Alert.clickAlertCloseBtn();
     });
 });

@@ -1,10 +1,7 @@
 import { $ } from '@wdio/globals'
-import Alert from "../commonComponents/alert";
 
 
 class SecurePage {
-    alert = Alert;
-
     async open(): Promise<void> {
         await browser.url('/secure');
     }
