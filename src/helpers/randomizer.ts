@@ -1,5 +1,6 @@
 import RandExp from "randexp";
 import { faker } from '@faker-js/faker';
+import * as consts from '@helpers/regExp.consts.json'
 
 
 /**
@@ -32,6 +33,7 @@ export function randomExponential() {
 
 /**
  * Returns random generated string of specified length, using specified regular expression.
+ * If a regular expression is not specified, then the default regular expression `[ -~]{15}` will be used.
  *
  * @param {string} regExp - specified regular expression. Example: `[a-zA-Z0-9]`.
  *
@@ -41,7 +43,7 @@ export function randomExponential() {
  * Example: `([a-z0-9-]){qty-2}[a-z0-9]`. In this case, `qty` placeholder is required and could be used only with "+" operator
  * @returns random string
  */
-export function randomString(regExp: string, length: number|LengthDiapason): string {
+export function randomString(regExp: string = consts.TEXT_INPUT.value, length: number|LengthDiapason = 15): string {
     const parsedRegExp = parseRegExp(regExp, length);
     if(parsedRegExp) {
         const randExpInstance = new RandExp(parsedRegExp);
