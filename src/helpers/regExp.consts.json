@@ -6,5 +6,9 @@
   "TEXT_INPUT": {
     "value": "[ -~]",
     "description": "all printable ASCII characters + space"
+  },
+  "USERNAME_INPUT": {
+    "value": "^[a-z0-9]([a-z0-9-]){qty-2}[a-z0-9]",
+    "description": "lowercase letters, digits, hyphen. Hyphen could not be the first or last character"
   }
 }

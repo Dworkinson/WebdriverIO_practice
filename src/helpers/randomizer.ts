@@ -33,14 +33,22 @@ export function randomExponential() {
 /**
  * Returns random generated string of specified length, using specified regular expression.
  *
- * @param {string} regExp - specified regular expression. Example: `[a-zA-Z0-9]`
+ * @param {string} regExp - specified regular expression. Example: `[a-zA-Z0-9]`.
  *
- * @param {number|number[]} length - exect length of string (e.g., 5 symbols long - {5}) or length diapason (e.g., from 1 to 5 symbols {1, 5})
+ * @param {number|number[]} length - exect length of string (e.g., 5 symbols long - `{5}`) or length diapason (e.g., from 1 to 5 symbols `{1, 5}`)
+ *
+ * Expressions with exact and diapason quantifiers in the middle of regular expression are supported.
+ * Example: `([a-z0-9-]){qty-2}[a-z0-9]`. In this case, `qty` placeholder is required and could be used only with "+" operator
  * @returns random string
  */
-export function randomString(regExp: string, length: number|number[]): string {
-    const randExpInstance = new RandExp(String.raw`${regExp}{${length}}`);
-    return randExpInstance.gen()
+export function randomString(regExp: string, length: number|LengthDiapason): string {
+    const parsedRegExp = parseRegExp(regExp, length);
+    if(parsedRegExp) {
+        const randExpInstance = new RandExp(parsedRegExp);
+        return randExpInstance.gen()
+    }
+    const randExpInstance = new RandExp(`${regExp}{${length}}`);
+    return randExpInstance.gen();
 }
 
 /**
@@ -54,4 +62,64 @@ export function randomDate(): Date {
     const firstTimestamp = -8640000000000000
     const lastTimestamp = 8640000000000000
     return faker.date.between({from: firstTimestamp, to: lastTimestamp})
+}
+
+// randomString helper-functions
+
+type LengthDiapason = [number, number];
+
+function validateLengthDiapason(lengthDiapason: LengthDiapason): void {
+    if(lengthDiapason[0] >= lengthDiapason[1]) {
+        throw new Error(
+            `Second number(MAX) should be greater than first (MIN).
+            Passed: [${lengthDiapason[0]}, ${lengthDiapason[1]}]`
+        );
+    }
+}
+
+function validateLength(uncalculatedLength: string): void {
+    const placeholderLengthMatcher = /\d+/;
+    const regExpLengthMatcher = /(?<=-)\d+/;
+
+    const matchedPlaceholderLength = uncalculatedLength.match(placeholderLengthMatcher);
+    const matchedRegExpLength = uncalculatedLength.match(regExpLengthMatcher);
+
+    if(matchedRegExpLength && matchedPlaceholderLength) {
+        const actualRegExpLength = Number(matchedRegExpLength[0]);
+        const actualPlaceholderLength = Number(matchedPlaceholderLength[0]);
+
+        if(actualPlaceholderLength < actualRegExpLength) {
+            throw new Error(
+                `Minimum length should be greater than "${actualRegExpLength}".
+                "${actualPlaceholderLength}" was passed instead`
+            )
+        }
+    }
+}
+
+function parseRegExp(regExpConst: string, length: number|LengthDiapason): string|void {
+    function replacePlaceholderFromRegExp(length: number, matchedStr: string): number {
+        matchedStr = matchedStr.replaceAll(/[{?}]/g, '').replace('qty', length.toString());
+        validateLength(matchedStr);
+        return eval(matchedStr);
+    }
+
+    const matcher = /({qty.*?})/;
+    const matched = regExpConst.match(matcher);
+
+    let matchedStr = '';
+    if(!matched) {
+        return;
+    }
+    matchedStr += matched[0];
+
+    if(typeof length === 'number') {
+        return regExpConst.replace(matcher, `{${replacePlaceholderFromRegExp(length, matchedStr)}}`)
+    }
+
+    validateLengthDiapason(length);
+    length.forEach((item, index) => {
+        length[index] = replacePlaceholderFromRegExp(length[index], matchedStr);
+    });
+    return regExpConst.replace(matcher, `{${length}}`);
 }
