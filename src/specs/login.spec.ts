@@ -6,8 +6,8 @@ import Alert from "@pages/commonComponents/alert";
 
 import { randomString } from "@helpers/randomizer";
 
-import * as data from "src/data/test.data.json"
-import * as dict from "src/data/dictionary.json"
+import * as data from "@data/test.data.json"
+import * as dict from "@data/dictionary.json"
 
 
 describe("Login: ", async () => {

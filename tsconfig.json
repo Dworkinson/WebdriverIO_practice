@@ -6,14 +6,13 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "dist",
     "types" : [
-      "mocha", "@wdio/types/globals", "node"
+      "mocha", "@wdio/globals", "node"
     ],
-    "baseUrl": "./",
     "paths": {
       "@pages/*": ["./src/pages/*"],
       "@helpers/*": ["./src/helpers/*"],
+      "@data/*": ["./src/data/*"]
     }
   },
   "include": ["src"]
