@@ -10,5 +10,23 @@
   },
   "unauthorized_alert": {
     "us": "You must login to view the secure area!"
+  },
+  "successful_registration_alert": {
+    "us": "Successfully registered, you can log in now."
+  },
+  "missed_regisration_fields_alert": {
+    "us": "All fields are required."
+  },
+  "short_username_alert": {
+    "us": "Username must be at least 3 characters long."
+  },
+  "wrong_username_registration_alert": {
+    "us": "Invalid username. Usernames can only contain lowercase letters, numbers, and single hyphens, must be between 3 and 39 characters, and cannot start or end with a hyphen."
+  },
+  "password_mismatch_alert": {
+    "us": "Passwords do not match."
+  },
+  "short_password_alert": {
+    "us": "Password must be at least 4 characters long."
   }
 }
