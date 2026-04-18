@@ -232,7 +232,7 @@ describe("Registration with invalid password: ", async () => {
     });
 })
 
-describe.only("e2e registration: ", async () => {
+describe("e2e registration: ", async () => {
     it("New user could successfully login after registration", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
@@ -255,6 +255,7 @@ describe.only("e2e registration: ", async () => {
         const secureUrl = await browser.getUrl();
         expect(secureUrl).to.include("/secure");
         expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
+        expect(await SecurePage.getUsername()).to.include(username);
 
         await SecurePage.clickOnLogoutBtn();
     });
