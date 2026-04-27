@@ -1,4 +1,4 @@
-import {config} from '../wdio.conf';
+import {config} from '@config/wdio.conf';
 
 config.baseUrl = 'https://practice.expandtesting.com';
 
