@@ -6,7 +6,8 @@
     "all_stage": "wdio src/config/envs/stage.conf.ts",
     "inputsTest": "wdio src/config/envs/stage.conf.ts --spec inputs.spec.ts",
     "loginTest": "wdio src/config/envs/stage.conf.ts --spec login.spec.ts",
-    "registerTest": "wdio src/config/envs/stage.conf.ts --spec register.spec.ts"
+    "registerTest": "wdio src/config/envs/stage.conf.ts --spec register.spec.ts",
+    "dynamicTableTest": "wdio src/config/envs/stage.conf.ts --spec dynamicTable.spec.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
