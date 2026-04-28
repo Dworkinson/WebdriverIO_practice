@@ -11,6 +11,7 @@
     "s": "wdio run src/helpers/gmail/getToken.conf.ts --spec src/helpers/gmail/getToken.spec.ts"
   },
   "devDependencies": {
+    "@badgateway/oauth2-client": "^3.3.1",
     "@faker-js/faker": "^10.4.0",
     "@types/chai": "^5.2.3",
     "@types/express": "^5.0.6",
@@ -27,6 +28,7 @@
     "fs-extra": "^11.3.4",
     "googleapis": "^171.4.0",
     "mocha": "^11.7.5",
+    "open": "^11.0.0",
     "prob.js": "^2.0.0",
     "randexp": "^0.5.3",
     "ts-node": "^10.9.2",
