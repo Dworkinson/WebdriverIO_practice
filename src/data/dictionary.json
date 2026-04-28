@@ -28,5 +28,8 @@
   },
   "short_password_alert": {
     "us": "Password must be at least 4 characters long."
+  },
+  "email_sent": {
+    "us": "An e-mail has been sent to you which explains how to reset your password."
   }
 }

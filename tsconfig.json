@@ -12,7 +12,8 @@
     "paths": {
       "@pages/*": ["./src/pages/*"],
       "@helpers/*": ["./src/helpers/*"],
-      "@data/*": ["./src/data/*"]
+      "@data/*": ["./src/data/*"],
+      "@config/*": ["./src/config/*"]
     }
   },
   "include": ["src"]
