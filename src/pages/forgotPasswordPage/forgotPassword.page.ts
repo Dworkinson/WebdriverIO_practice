@@ -13,6 +13,10 @@ class ForgotPasswordPage {
         return $('[id="forgot_password"] button[type="submit"]');
     }
 
+    private get confirmationAlert(): Promise<WebdriverIO.Element> {
+        return $('[id="confirmation-alert"]');
+    }
+
     async setEmail(email: string): Promise<void> {
         await (await this.emailInput).waitForDisplayed();
         await (await this.emailInput).setValue(email);
@@ -28,5 +32,11 @@ class ForgotPasswordPage {
         await this.setEmail(email);
         await this.clickOnSubmitBtn();
     }
+
+    async isConfirmationAlertDisplayed(): Promise<boolean> {
+        await (await this.confirmationAlert).waitForDisplayed();
+        return (await this.confirmationAlert).isDisplayed();
+    }
 }
+
 export default new ForgotPasswordPage();
