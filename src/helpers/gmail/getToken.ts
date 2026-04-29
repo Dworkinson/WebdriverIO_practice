@@ -30,12 +30,7 @@ async function generateAuthUrl(oAuth2Client: OAuth2Client): Promise<string> {
 }
 
 async function runServer(app: Express) {
-    return app.listen(3000, () => {
-        // const url = generateAuthUrl();
-
-        console.log('server successfully started on port: 3000');
-        // console.log(url);
-    })
+    return app.listen(3000)
 }
 
 async function closeServer(server: Server): Promise<void> {
@@ -44,7 +39,6 @@ async function closeServer(server: Server): Promise<void> {
 }
 
 async function writeToken(app: Express, oAuth2Client: OAuth2Client, token_path = 'token.json'): Promise<void> {
-    app.use(express.json());
     app.get('/oauth2Callback', async (req: express.Request, res: express.Response) => {
         try {
             const code = req.query.code as string;
@@ -87,7 +81,7 @@ async function getToken(params?: Params): Promise<void> {
     const app = express();
     const oAuthClient = await getOAuthClient();
     const server = await runServer(app);
-    const url = generateAuthUrl(oAuthClient);
+    const url = await generateAuthUrl(oAuthClient);
     console.log('Open the following URL in your browser:');
     console.log(url)
 
