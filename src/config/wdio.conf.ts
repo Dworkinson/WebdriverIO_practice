@@ -43,8 +43,4 @@ export const config: Options.Testrunner = {
         ui: 'bdd',
         timeout: 60000
     },
-
-    beforeSession: function () {
-        require('tsconfig-paths').register()
-    },
 }
