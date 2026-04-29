@@ -16,7 +16,7 @@ async function authorize(tokenPath: string): Promise<OAuth2Client> {
     return oAuth2Client;
 }
 
-async function getLatestMessageText(tokenPath: string): Promise<string|null|undefined> {
+async function getLatestMessageText(tokenPath: string): Promise<string|null> {
     const gmail = google.gmail({
         version: 'v1',
         auth: await authorize(tokenPath),
@@ -29,17 +29,53 @@ async function getLatestMessageText(tokenPath: string): Promise<string|null|unde
 
     const messageId = listResponse.data.messages?.[0]?.id;
 
-    if (!messageId) {
-        return null;
-    }
+    if (!messageId) return null;
 
     const message =  await gmail.users.messages.get({
         userId: 'me',
         id: messageId,
         format: 'full',
     });
+    const encodedBody = message.data.payload?.parts?.[0]?.body?.data;
 
-    return message.data.snippet;
+    if (!encodedBody) return null;
+
+    return Buffer.from(encodedBody, 'base64').toString('utf-8');
 }
 
-export { getLatestMessageText }
+async function deleteAllMessages(tokenPath: string): Promise<void> {
+    const gmail = google.gmail({
+        version: 'v1',
+        auth: await authorize(tokenPath),
+    });
+
+    while (true) {
+        const listResponse = await gmail.users.messages.list({
+            userId: 'me',
+            maxResults: 500,
+        });
+
+        const messages = listResponse.data.messages ?? [];
+
+        if (messages.length === 0) {
+            break;
+        }
+
+        const ids = messages
+            .map((message) => message.id)
+            .filter((id): id is string => Boolean(id));
+
+        if (ids.length === 0) {
+            break;
+        }
+
+        await gmail.users.messages.batchDelete({
+            userId: 'me',
+            requestBody: {
+                ids,
+            },
+        });
+    }
+}
+
+export { getLatestMessageText, deleteAllMessages , authorize}
