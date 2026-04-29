@@ -8,7 +8,7 @@
     "loginTest": "wdio src/config/envs/stage.conf.ts --spec login.spec.ts",
     "registerTest": "wdio src/config/envs/stage.conf.ts --spec register.spec.ts",
     "dynamicTableTest": "wdio src/config/envs/stage.conf.ts --spec dynamicTable.spec.ts",
-    "s": "wdio run src/helpers/gmail/getToken.conf.ts --spec src/helpers/gmail/getToken.spec.ts"
+    "forgotPasswordTest": "wdio src/config/envs/stage.conf.ts --spec forgotPassword.spec.ts"
   },
   "devDependencies": {
     "@badgateway/oauth2-client": "^3.3.1",
@@ -28,7 +28,6 @@
     "fs-extra": "^11.3.4",
     "googleapis": "^171.4.0",
     "mocha": "^11.7.5",
-    "open": "^11.0.0",
     "prob.js": "^2.0.0",
     "randexp": "^0.5.3",
     "ts-node": "^10.9.2",

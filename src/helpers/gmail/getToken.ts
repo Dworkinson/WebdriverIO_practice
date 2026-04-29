@@ -4,7 +4,6 @@ import * as fs from 'fs-extra';
 import * as credentials from '@data/sensetive/credentials.json';
 import { Server } from "node:http";
 import { OAuth2Client } from "google-auth-library";
-import open from 'open';
 
 
 type Params = {
@@ -23,16 +22,10 @@ async function getOAuthClient(): Promise<OAuth2Client> {
 }
 
 async function generateAuthUrl(oAuth2Client: OAuth2Client): Promise<string> {
-    // const oAuth2Client = new google.auth.OAuth2(
-    //     credentials.client_id,
-    //     credentials.client_secret,
-    //     credentials.redirect_uris[0]
-    // );
-
     return oAuth2Client.generateAuthUrl({
         access_type: 'offline',
         prompt: 'consent',
-        scope: ['https://www.googleapis.com/auth/gmail.modify'],
+        scope: ['https://mail.google.com/'],
     });
 }
 
@@ -94,11 +87,12 @@ async function getToken(params?: Params): Promise<void> {
     const app = express();
     const oAuthClient = await getOAuthClient();
     const server = await runServer(app);
-    const url = await generateAuthUrl(oAuthClient);
+    const url = generateAuthUrl(oAuthClient);
+    console.log('Open the following URL in your browser:');
+    console.log(url)
 
     try {
         await writeToken(app, oAuthClient, params?.tokenPath);
-        await open(url);
         await waitForTokenExists(
             params?.timeout,
             params?.interval,
