@@ -1,4 +1,12 @@
 import type { Options } from '@wdio/types'
+
+import 'tsconfig-paths/register';
+
+import dotenv from 'dotenv';
+import minimist from 'minimist';
+const env = minimist(process.argv).ENV || '.env.example';
+dotenv.config({ path: env })
+
 export const config: Options.Testrunner = {
     runner: 'local',
     autoCompileOpts: {
@@ -12,6 +20,7 @@ export const config: Options.Testrunner = {
     specs: [
         './src/specs/**/*.spec.ts'
     ],
+    baseUrl: process.env.BASE_URL,
     exclude: [
     ],
     maxInstances: 10,

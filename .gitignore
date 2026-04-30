@@ -23,4 +23,7 @@ package-lock.json
 *.sln
 *.sw?
 
-src/data/sensetive
+.sensitive
+
+.env*
+!.env.example

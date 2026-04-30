@@ -1,25 +1,25 @@
 import { google } from 'googleapis';
 import * as fs from 'fs-extra';
-import * as credentials from '@data/sensetive/credentials.json';
 import { OAuth2Client } from "google-auth-library";
 
+const TOKEN_PATH = process.env.TOKEN_PATH || 'token.json';
 
-async function authorize(tokenPath: string): Promise<OAuth2Client> {
+async function authorize(): Promise<OAuth2Client> {
     const oAuth2Client = new google.auth.OAuth2(
-        credentials.client_id,
-        credentials.client_secret,
-        credentials.redirect_uris[0]
+        process.env.CLIENT_ID,
+        process.env.CLIENT_SECRET,
+        process.env.REDIRECT_URI
     );
 
-    const token = await fs.readFile(tokenPath, 'utf8');
+    const token = await fs.readFile(TOKEN_PATH, 'utf8');
     oAuth2Client.setCredentials(JSON.parse(token));
     return oAuth2Client;
 }
 
-async function getLatestMessageText(tokenPath: string): Promise<string|null> {
+async function getLatestMessageText(): Promise<string|null> {
     const gmail = google.gmail({
         version: 'v1',
-        auth: await authorize(tokenPath),
+        auth: await authorize(),
     });
 
     const listResponse = await gmail.users.messages.list({
@@ -43,10 +43,10 @@ async function getLatestMessageText(tokenPath: string): Promise<string|null> {
     return Buffer.from(encodedBody, 'base64').toString('utf-8');
 }
 
-async function deleteAllMessages(tokenPath: string): Promise<void> {
+async function deleteAllMessages(): Promise<void> {
     const gmail = google.gmail({
         version: 'v1',
-        auth: await authorize(tokenPath),
+        auth: await authorize(),
     });
 
     while (true) {

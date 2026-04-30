@@ -4,9 +4,7 @@ import { expect } from "chai";
 import ForgotPasswordPage from "@pages/forgotPasswordPage/forgotPassword.page";
 import { deleteAllMessages, getLatestMessageText } from "@helpers/gmail/getMailContent";
 import { waitForResult } from "@helpers/waitForFunctionResult";
-import * as user from "@data/sensetive/mail.json";
 
-const TOKEN_PATH = 'src/data/sensetive/token.json';
 const urlRegExp = new RegExp(/https:\/\/\S*\/login/);
 
 
@@ -23,14 +21,14 @@ describe('Forgot Password', async () => {
         (await browser.mock(regExp)).abort('Aborted');
 
         await ForgotPasswordPage.open();
-        await deleteAllMessages(TOKEN_PATH);
+        await deleteAllMessages();
     });
 
     it('link should be received', async () => {
-        await ForgotPasswordPage.forgotPassword(user.email);
+        await ForgotPasswordPage.forgotPassword(process.env.USER_EMAIL || 'dummy@mail.com');
 
         expect(await ForgotPasswordPage.isConfirmationAlertDisplayed()).to.be.true;
-        const msg = await waitForResult(getLatestMessageText, [TOKEN_PATH]);
+        const msg = await waitForResult(getLatestMessageText);
         const url = getRedirectUrl(urlRegExp, msg);
 
         // in live conditions should get real url
@@ -42,11 +40,11 @@ describe('Forgot Password', async () => {
 
     //delete all messages after each successful test
     afterEach(async () => {
-        await deleteAllMessages(TOKEN_PATH);
+        await deleteAllMessages();
     })
 });
 
 //delete all messages after each suite (need in case of failure in any test)
 afterEach(async () => {
-    await deleteAllMessages(TOKEN_PATH);
+    await deleteAllMessages();
 });

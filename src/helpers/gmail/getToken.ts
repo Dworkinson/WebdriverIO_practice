@@ -1,7 +1,6 @@
 import express, { Express } from 'express';
 import { google } from 'googleapis';
 import * as fs from 'fs-extra';
-import * as credentials from '@data/sensetive/credentials.json';
 import { Server } from "node:http";
 import { OAuth2Client } from "google-auth-library";
 
@@ -15,9 +14,9 @@ type Params = {
 
 async function getOAuthClient(): Promise<OAuth2Client> {
     return new google.auth.OAuth2(
-        credentials.client_id,
-        credentials.client_secret,
-        credentials.redirect_uris[0]
+        process.env.CLIENT_ID,
+        process.env.CLIENT_SECRET,
+        process.env.REDIRECT_URI
     )
 }
 
