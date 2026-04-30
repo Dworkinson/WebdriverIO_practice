@@ -10,6 +10,7 @@
     1. Select Web Application
     2. Use http://localhost:3000 for JavaScript origins and http://localhost:3000/oauth2Callback for redirect
     3. Save Client ID and Client Secret
+    4. Enable Gmail API in console.cloud.google.com
 3. In a local project:
     1. install packages:
         1. `@badgateway/oauth2-client` (TypeScript definition for OAuth2 *(optional)*)
