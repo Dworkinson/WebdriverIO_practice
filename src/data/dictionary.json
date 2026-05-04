@@ -31,5 +31,8 @@
   },
   "email_sent": {
     "us": "An e-mail has been sent to you which explains how to reset your password."
+  },
+  "wrong_otp": {
+    "us": "The provided OTP code is incorrect. Please check your code and try again."
   }
 }

@@ -11,7 +11,8 @@
     "forgotPasswordTest": "wdio src/config/wdio.conf.ts --spec forgotPassword.spec.ts --ENV .env/.env.stage",
     "otpTest": "wdio src/config/wdio.conf.ts --spec otp.spec.ts --ENV .env/.env.stage",
     "inputsTestStage": "wdio src/config/wdio.conf.ts --spec inputs.spec.ts --ENV .env/.env.stage",
-    "forgotPasswordTestStage": "wdio src/config/wdio.conf.ts --spec forgotPassword.spec.ts --ENV .env/.env.stage"
+    "forgotPasswordTestStage": "wdio src/config/wdio.conf.ts --spec forgotPassword.spec.ts --ENV .env/.env.stage",
+    "otpTestStage": "wdio src/config/wdio.conf.ts --spec otp.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@badgateway/oauth2-client": "^3.3.1",
