@@ -11,6 +11,8 @@ describe('Browser info: ', async () => {
 
     it('could get browser info', async () => {
         await BrowserInfoPage.open();
+        await BrowserInfoPage.showBrowserInfo();
+
         expect(await BrowserInfoPage.getBrowserProperty(NavigatorKeys.userAgent))
             .to.be.equal(await BrowserInfoPage.getUserAgent());
 

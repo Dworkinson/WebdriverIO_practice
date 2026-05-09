@@ -13,6 +13,10 @@ class BrowserInfoPage {
         await browser.url('/my-browser');
     }
 
+    private get browserToggleBtn(): Promise<WebdriverIO.Element> {
+        return $('[id="browser-toggle"]');
+    }
+
     private get userAgent(): Promise<WebdriverIO.Element> {
         return $('[id="browser-user-agent"]');
     }
@@ -35,6 +39,11 @@ class BrowserInfoPage {
 
     private get platform(): Promise<WebdriverIO.Element> {
         return $('[id="browser-platform"]');
+    }
+
+    async showBrowserInfo(): Promise<void> {
+        await (await this.browserToggleBtn).waitForClickable()
+        await (await this.browserToggleBtn).click();
     }
 
     async getUserAgent(): Promise<string> {
