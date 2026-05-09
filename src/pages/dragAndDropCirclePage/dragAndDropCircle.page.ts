@@ -1,6 +1,6 @@
 import { browser, $ } from "@wdio/globals"
 
-export enum CircleColor {
+export enum Color {
     red = 'red',
     green = 'green',
     blue = 'blue'
@@ -11,46 +11,40 @@ class DragAndDropCirclePage {
         await browser.url('/drag-and-drop-circles');
     }
 
-    private get red(): Promise<WebdriverIO.Element> {
-        return $('[id="red"]');
-    }
-
-    private get green(): Promise<WebdriverIO.Element> {
-        return $('[id="green"]');
-    }
-
-    private get blue(): Promise<WebdriverIO.Element> {
-        return $('[id="blue"]');
-    }
-
     private get target(): Promise<WebdriverIO.Element> {
         return $('[id="target"]');
     }
 
-    async dragRedCircle(): Promise<void> {
-        await (await this.red).waitForDisplayed();
-        await (await this.target).waitForDisplayed();
-        await (await this.red).dragAndDrop(await this.target);
+    private get circlesInTarget(): Promise<WebdriverIO.ElementArray> {
+        return $$('[id="target"] [class]');
     }
 
-    async dragGreenCircle(): Promise<void> {
-        await (await this.green).waitForDisplayed();
+    async dragCircleToTarget(color: Color): Promise<void> {
+        const circle = $(`[class="${color}"]`);
+        const circleInTarget = $(`[id="target"] [class="${color}"]`);
+        // wait for elements on starting position
+        await circle.waitForDisplayed();
         await (await this.target).waitForDisplayed();
-        await (await this.green).dragAndDrop(await this.target);
+        await circle.dragAndDrop(await this.target);
+        // wait for circle inside the target
+        await circleInTarget.waitForDisplayed();
+
     }
 
-    async dragBlueCircle(): Promise<void> {
-        await (await this.blue).waitForDisplayed();
+    async isCircleInTarget(color: Color): Promise<boolean> {
+        const circle = $(`[id="target"] [class="${color}"]`);
+
         await (await this.target).waitForDisplayed();
-        await (await this.blue).dragAndDrop(await this.target);
+        return circle.isExisting();
     }
 
-    async isCircleInTarget(color: CircleColor): Promise<boolean> {
-        const circle = (await this.target).$(`[id="${color}"]`);
-        const c = await circle;
-        const f = Boolean(c);
-        let a;
-        return Boolean(await circle);
+    async isColorSequenceValid(sequence: Color[]): Promise<boolean> {
+        const circlesInTarget = await this.circlesInTarget;
+
+        for(let i = 0; i < sequence.length; ++i) {
+            if(await circlesInTarget[i].getAttribute('class') !== sequence[i]) return false;
+        }
+        return true;
     }
 }
 
