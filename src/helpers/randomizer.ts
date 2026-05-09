@@ -3,6 +3,16 @@ import { faker } from '@faker-js/faker';
 import * as consts from '@helpers/regExp.consts.json'
 
 
+/** Simple function for shuffling an array containing elements of any type */
+export function shuffleArray(array: any[]): any[] {
+    for (let i = 0; i < array.length; i++) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
 /**
  * Returns random generated number. Positive integer by default.
  *
