@@ -4,6 +4,10 @@ import * as fs from 'fs-extra';
 import { Server } from "node:http";
 import { OAuth2Client } from "google-auth-library";
 
+import dotenv from 'dotenv';
+import minimist from 'minimist';
+const env = minimist(process.argv).ENV || '.env.example';
+dotenv.config({ path: env })
 
 type Params = {
     timeout?: number,
@@ -37,7 +41,7 @@ async function closeServer(server: Server): Promise<void> {
     server.closeAllConnections();
 }
 
-async function writeToken(app: Express, oAuth2Client: OAuth2Client, token_path = 'token.json'): Promise<void> {
+async function writeToken(app: Express, oAuth2Client: OAuth2Client, token_path = process.env.TOKEN_PATH || 'token.json'): Promise<void> {
     app.get('/oauth2Callback', async (req: express.Request, res: express.Response) => {
         try {
             const code = req.query.code as string;
@@ -48,7 +52,7 @@ async function writeToken(app: Express, oAuth2Client: OAuth2Client, token_path =
 
             const { tokens } = await oAuth2Client.getToken(code);
 
-            fs.writeFileSync(token_path, JSON.stringify(tokens, null, 2));
+            fs.appendFileSync(token_path, JSON.stringify(tokens, null, 2));
             res.send('Token saved. You can close this tab.');
         } catch (error) {
             console.error(error);
@@ -62,7 +66,7 @@ async function waitForTokenExists(
     timeout = 60000,
     interval = 500,
     timeoutMsg = 'Token still not exists',
-    token_path = "token.json"
+    token_path = process.env.TOKEN_PATH || "token.json"
 ):Promise<void> {
     const _timeout = setTimeout(async () => {
         throw new Error(`${timeoutMsg}`);
@@ -99,5 +103,6 @@ async function getToken(params?: Params): Promise<void> {
     await closeServer(server);
 }
 
-
-export { getToken }
+getToken().then(() => {
+    console.log('Token saved.');
+});
