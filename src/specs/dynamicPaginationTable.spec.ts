@@ -171,11 +171,13 @@ describe("Search: ", async () => {
         const randRowIndex = faker.number.int({ min: 0, max: rowsQty - 1 });
         const randColIndex = faker.number.int({ min: 0, max: columnsQth - 1 });
 
-        const searchValue = await DynamicPaginationTablePage.getCellContentByIndex(randColIndex, randRowIndex);
+        const searchValue = (await DynamicPaginationTablePage.getCellContentByIndex(randColIndex, randRowIndex))
+            .toLowerCase();
         await DynamicPaginationTablePage.search(searchValue);
 
-        const cellContent = await DynamicPaginationTablePage.getCellContentByIndex(randColIndex, 0);
-        expect(cellContent).to.contain(searchValue);
+        const rowContent = (await DynamicPaginationTablePage.getRowContentByIndex(0))
+            .toLowerCase();
+        expect(rowContent).to.contain(searchValue);
     });
 
     it('could be successfully searched by partial match', async () => {
