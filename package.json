@@ -17,7 +17,8 @@
     "dynamicPaginationTableTest": "wdio src/config/wdio.conf.ts --spec dynamicPaginationTable.spec.ts --ENV .env/.env.stage",
     "dragAndDropTest": "wdio src/config/wdio.conf.ts --spec dragAndDrop.spec.ts --ENV .env/.env.stage",
     "browserInfoTest": "wdio src/config/wdio.conf.ts --spec browserInfo.spec.ts --ENV .env/.env.stage",
-    "dragAndDropCircleTest": "wdio src/config/wdio.conf.ts --spec dragAndDropCircle.spec.ts --ENV .env/.env.stage"
+    "dragAndDropCircleTest": "wdio src/config/wdio.conf.ts --spec dragAndDropCircle.spec.ts --ENV .env/.env.stage",
+    "fileUploadTest": "wdio src/config/wdio.conf.ts --spec fileUpload.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@badgateway/oauth2-client": "^3.3.1",

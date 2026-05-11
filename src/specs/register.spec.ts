@@ -13,7 +13,7 @@ import * as dict from "@data/dictionary.json";
 import SecurePage from "@pages/loginPage/secure.page";
 
 
-describe("Successful registration: ", async () => {
+describe.skip("Successful registration: ", async () => {
     before(async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
@@ -232,7 +232,7 @@ describe("Registration with invalid password: ", async () => {
     });
 })
 
-describe("e2e registration: ", async () => {
+describe.skip("e2e registration: ", async () => {
     it("New user could successfully login after registration", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");

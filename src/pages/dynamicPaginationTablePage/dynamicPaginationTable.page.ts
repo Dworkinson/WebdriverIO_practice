@@ -139,6 +139,12 @@ class DynamicPaginationTablePage extends DynamicPaginationTablePageSelectors {
         await (await this.searchInput).waitForDisplayed();
         await (await this.searchInput).setValue(searchingValue);
     }
+
+    async getRowContentByIndex(rowIndex: number): Promise<string> {
+        const row = (await this.tableRows)[rowIndex];
+        await row.waitForDisplayed();
+        return await row.getText();
+    }
 }
 
 export default new DynamicPaginationTablePage();
