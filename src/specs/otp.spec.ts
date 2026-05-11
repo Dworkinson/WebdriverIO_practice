@@ -24,31 +24,12 @@ describe('OTP: ', () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await OtpPage.open();
         await deleteAllMessages();
     });
 
-    it('should be able to login with OTP', async () => {
-        const email = process.env.USER_EMAIL || 'dummy@mail.test';
-        await OtpPage.sendOtp(email)
-
-        const infoMsg = await OtpPage.getInfoMessage();
-
-        expect(infoMsg).to.contains(email);
-
-        const emailText = await waitForResult(getLatestMessageText);
-        const otp = getOtpCode(otpRegExp, emailText);
-        expect(otp).to.be.exist;
-
-        await OtpPage.verifyOtp(otp);
-        const url = await browser.getUrl();
-        expect(url).to.include("/secure");
-        expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
-
-        await SecurePage.clickOnLogoutBtn();
-    });
-
     it('should not be able to login with invalid OTP', async () => {
+        await OtpPage.open();
+
         const email = process.env.USER_EMAIL || 'dummy@mail.test';
         await OtpPage.sendOtp(email);
 
@@ -67,6 +48,31 @@ describe('OTP: ', () => {
 
         const url = await browser.getUrl();
         expect(url).to.include("/otp-verification");
+    });
+
+    it('should be able to login with OTP', async () => {
+        await OtpPage.open();
+
+        const email = process.env.USER_EMAIL || 'dummy@mail.test';
+        await OtpPage.sendOtp(email)
+
+        const infoMsg = await OtpPage.getInfoMessage();
+
+        expect(infoMsg).to.contains(email);
+
+        const emailText = await waitForResult(getLatestMessageText);
+        const otp = getOtpCode(otpRegExp, emailText);
+        expect(otp).to.be.exist;
+
+        await OtpPage.verifyOtp(otp);
+
+        await browser.waitUntil(async () => {
+            return (await browser.getUrl()).includes('/secure');
+        });
+
+        expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
+
+        await SecurePage.clickOnLogoutBtn();
     });
 
     afterEach(async () => {
