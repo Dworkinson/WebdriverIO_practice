@@ -71,7 +71,7 @@ export function randomString(regExp: string = consts.TEXT_INPUT.value, length: n
  * @see {@link https://262.ecma-international.org/5.1/#sec-15.9.1.1 Time Values and Time Range}
  */
 export function randomDate(): Date {
-    const firstTimestamp = -8640000000000000
+    const firstTimestamp = -62135596800
     const lastTimestamp = 8640000000000000
     return faker.date.between({from: firstTimestamp, to: lastTimestamp})
 }
