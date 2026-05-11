@@ -31,11 +31,13 @@ export const config: Options.Testrunner = {
             args: [
                 '--disable-background-networking',
                 '--disable-sync',
-                '--disable-extensions'
+                '--disable-extensions',
+                '--lang=en-US'
             ],
             prefs: {
                 // preventing "weak password" warning
-                'profile.password_manager_leak_detection': false            }
+                'profile.password_manager_leak_detection': false
+            }
         }
     }],
 
