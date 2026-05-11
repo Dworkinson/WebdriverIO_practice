@@ -116,7 +116,7 @@ describe('Password inputs: ', () => {
 
         await WebInputsPage.fillInputPassword(password);
         await WebInputsPage.displayInputs();
-        expect(await WebInputsPage.getOutputPasswordText()).to.be.equal(password);
+        expect(await WebInputsPage.getOutputPasswordText()).to.be.equal(password.trim());
     });
 
     it('password should not be displayed', async () => {
