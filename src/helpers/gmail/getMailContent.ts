@@ -16,7 +16,7 @@ async function authorize(): Promise<OAuth2Client> {
     return oAuth2Client;
 }
 
-async function getLatestMessageText(): Promise<string|null> {
+async function getLatestMessageText(email: string): Promise<string|null> {
     const gmail = google.gmail({
         version: 'v1',
         auth: await authorize(),
@@ -25,6 +25,7 @@ async function getLatestMessageText(): Promise<string|null> {
     const listResponse = await gmail.users.messages.list({
         userId: 'me',
         maxResults: 1,
+        q: `to:${email}`
     });
 
     const messageId = listResponse.data.messages?.[0]?.id;
@@ -43,7 +44,7 @@ async function getLatestMessageText(): Promise<string|null> {
     return Buffer.from(encodedBody, 'base64').toString('utf-8');
 }
 
-async function deleteAllMessages(): Promise<void> {
+async function deleteMessages(email: string) {
     const gmail = google.gmail({
         version: 'v1',
         auth: await authorize(),
@@ -53,6 +54,7 @@ async function deleteAllMessages(): Promise<void> {
         const listResponse = await gmail.users.messages.list({
             userId: 'me',
             maxResults: 500,
+            q: `to:${email}`
         });
 
         const messages = listResponse.data.messages ?? [];
@@ -78,4 +80,4 @@ async function deleteAllMessages(): Promise<void> {
     }
 }
 
-export { getLatestMessageText, deleteAllMessages , authorize}
+export { getLatestMessageText, deleteMessages }

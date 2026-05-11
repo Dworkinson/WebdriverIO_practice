@@ -1,14 +1,18 @@
 import {browser} from "@wdio/globals";
 import {expect} from "chai";
 import OtpPage from "@pages/otpPage/otp.page";
-import { deleteAllMessages, getLatestMessageText } from "@helpers/gmail/getMailContent";
+import { deleteMessages, getLatestMessageText } from "@helpers/gmail/getMailContent";
 import { waitForResult } from "@helpers/waitForFunctionResult";
 import SecurePage from "@pages/loginPage/secure.page";
 import Alert from "@pages/commonComponents/alert";
 import * as dict from "@data/dictionary.json";
-import { randomString } from "@helpers/randomizer";
+import { randomString, generateTestEmail } from "@helpers/randomizer";
+
 
 const otpRegExp = new RegExp(/\d{6}/);
+
+const email = process.env.USER_EMAIL || 'dummy@mail.test';
+const testEmail = generateTestEmail(email);
 
 function getOtpCode(regExp: RegExp, msg: string): string {
     const otp = msg.match(regExp);
@@ -23,17 +27,14 @@ describe('OTP: ', () => {
     before(async () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
-
-        await deleteAllMessages();
     });
 
     it('should not be able to login with invalid OTP', async () => {
         await OtpPage.open();
 
-        const email = process.env.USER_EMAIL || 'dummy@mail.test';
-        await OtpPage.sendOtp(email);
+        await OtpPage.sendOtp(testEmail);
 
-        const emailText = await waitForResult(getLatestMessageText);
+        const emailText = await waitForResult(getLatestMessageText, [testEmail]);
         const otp = getOtpCode(otpRegExp, emailText);
         expect(otp).to.be.exist;
 
@@ -53,14 +54,13 @@ describe('OTP: ', () => {
     it('should be able to login with OTP', async () => {
         await OtpPage.open();
 
-        const email = process.env.USER_EMAIL || 'dummy@mail.test';
-        await OtpPage.sendOtp(email)
+        await OtpPage.sendOtp(testEmail);
 
         const infoMsg = await OtpPage.getInfoMessage();
 
-        expect(infoMsg).to.contains(email);
+        expect(infoMsg).to.contains(testEmail);
 
-        const emailText = await waitForResult(getLatestMessageText);
+        const emailText = await waitForResult(getLatestMessageText, [testEmail]);
         const otp = getOtpCode(otpRegExp, emailText);
         expect(otp).to.be.exist;
 
@@ -68,7 +68,7 @@ describe('OTP: ', () => {
 
         await browser.waitUntil(async () => {
             return (await browser.getUrl()).includes('/secure');
-        });
+        }, {timeout: 20000});
 
         expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
 
@@ -76,10 +76,10 @@ describe('OTP: ', () => {
     });
 
     afterEach(async () => {
-        await deleteAllMessages();
+        await waitForResult(deleteMessages, [testEmail]);
     });
 });
 
 afterEach(async () => {
-    await deleteAllMessages();
+    await waitForResult(deleteMessages, [testEmail]);
 });

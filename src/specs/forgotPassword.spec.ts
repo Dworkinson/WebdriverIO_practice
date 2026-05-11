@@ -2,11 +2,13 @@ import { browser } from "@wdio/globals";
 import { expect } from "chai";
 
 import ForgotPasswordPage from "@pages/forgotPasswordPage/forgotPassword.page";
-import { deleteAllMessages, getLatestMessageText } from "@helpers/gmail/getMailContent";
+import { deleteMessages, getLatestMessageText } from "@helpers/gmail/getMailContent";
 import { waitForResult } from "@helpers/waitForFunctionResult";
+import {generateTestEmail} from "@helpers/randomizer";
 
 const urlRegExp = new RegExp(/https:\/\/\S*\/login/);
-
+const email = process.env.USER_EMAIL || 'dummy@mail.test';
+const testEmail = generateTestEmail(email);
 
 function getRedirectUrl(regExp: RegExp, msg: string) {
     const url = msg.match(regExp);
@@ -15,20 +17,21 @@ function getRedirectUrl(regExp: RegExp, msg: string) {
     }
 }
 
+
 describe('Forgot Password', async () => {
     before(async () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
         await ForgotPasswordPage.open();
-        await deleteAllMessages();
+        await deleteMessages(testEmail);
     });
 
     it('link should be received', async () => {
-        await ForgotPasswordPage.forgotPassword(process.env.USER_EMAIL || 'dummy@mail.com');
+        await ForgotPasswordPage.forgotPassword(testEmail);
 
         expect(await ForgotPasswordPage.isConfirmationAlertDisplayed()).to.be.true;
-        const msg = await waitForResult(getLatestMessageText);
+        const msg = await waitForResult(getLatestMessageText, [testEmail]);
         const url = getRedirectUrl(urlRegExp, msg);
 
         // in live conditions should get real url
@@ -40,11 +43,11 @@ describe('Forgot Password', async () => {
 
     //delete all messages after each successful test
     afterEach(async () => {
-        await deleteAllMessages();
+        await deleteMessages(testEmail);
     })
 });
 
 //delete all messages after each suite (need in case of failure in any test)
 afterEach(async () => {
-    await deleteAllMessages();
+    await deleteMessages(testEmail);
 });
