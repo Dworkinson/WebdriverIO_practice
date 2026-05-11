@@ -68,7 +68,7 @@ describe('OTP: ', () => {
 
         await browser.waitUntil(async () => {
             return (await browser.getUrl()).includes('/secure');
-        }, {timeout: 20000});
+        });
 
         expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
 
