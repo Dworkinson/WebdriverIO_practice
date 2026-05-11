@@ -78,6 +78,7 @@ async function deleteMessages(email: string) {
             },
         });
     }
+    return true;
 }
 
 export { getLatestMessageText, deleteMessages }

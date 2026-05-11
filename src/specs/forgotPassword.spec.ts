@@ -24,7 +24,7 @@ describe('Forgot Password', async () => {
         (await browser.mock(regExp)).abort('Aborted');
 
         await ForgotPasswordPage.open();
-        await deleteMessages(testEmail);
+        await waitForResult(deleteMessages, [testEmail]);
     });
 
     it('link should be received', async () => {
@@ -43,11 +43,11 @@ describe('Forgot Password', async () => {
 
     //delete all messages after each successful test
     afterEach(async () => {
-        await deleteMessages(testEmail);
+        await waitForResult(deleteMessages, [testEmail]);
     })
 });
 
 //delete all messages after each suite (need in case of failure in any test)
 afterEach(async () => {
-    await deleteMessages(testEmail);
+    await waitForResult(deleteMessages, [testEmail]);
 });
