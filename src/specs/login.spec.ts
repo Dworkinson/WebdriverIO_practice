@@ -1,5 +1,4 @@
 import {expect} from "chai"
-import MainPage from "@pages/mainPage/main.page";
 import LoginPage from "@pages/loginPage/login.page";
 import SecurePage from "@pages/loginPage/secure.page";
 import Alert from "@pages/commonComponents/alert";
@@ -15,8 +14,7 @@ describe("Login: ", async () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await MainPage.open();
-        await MainPage.clickTestLoginPage();
+        await LoginPage.open();
     });
 
     it('should be able to login', async () => {
