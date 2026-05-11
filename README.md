@@ -44,6 +44,15 @@ OAuth2 is used to get access to Google APIs.
    - [Gmail API documentation](https://developers.google.com/workspace/gmail/api/reference/rest)
    - [Google APIs Node.js Client documentation](https://googleapis.dev/nodejs/googleapis/latest/gmail/)
 
+
+## Allure reporter (see [official documentation](https://allurereport.org/docs/webdriverio/) for more info)
+1. To generate reports, you need to install `allure-commandline` and `@wdio/allure-reporter`:
+2. Allure reporter required Java:
+   * download and install [JDK](https://www.oracle.com/ua/java/technologies/downloads/)
+   * add `JAVA_HOME` and `PATH` variables (see [documentation](https://www.java.com/download/help/path.html))
+3. Configure wdio.conf.js ([example](#adding-allure-to-wdioconf))
+4. To generate report and open it, run `allure serve`
+
 ### `express` example:
 ```ts
     ///
@@ -73,4 +82,23 @@ const listResponse = await gmail.users.messages.list({
     userId: 'me',
     maxResults: 1,
 });
+```
+
+### adding Allure to wdio.conf:
+```ts
+
+import type { Options } from '@wdio/types'
+//
+export const config: Options.Testrunner = {
+///
+reporters: ['spec',
+    [
+        'allure',
+        {
+            outputDir: 'allure-results',
+        }
+    ]
+],
+    ///
+}
 ```
