@@ -2,6 +2,12 @@ import RandExp from "randexp";
 import { faker } from '@faker-js/faker';
 import * as consts from '@helpers/regExp.consts.json'
 
+/** Generating an email based on real one and adding a random UUID */
+export function generateTestEmail(email: string) {
+    const [username, domain] = email.split('@');
+    const randId = faker.string.uuid();
+    return `${username}+${randId}@${domain}`;
+}
 
 /** Simple function for shuffling an array containing elements of any type */
 export function shuffleArray(array: any[]): any[] {
