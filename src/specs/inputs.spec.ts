@@ -3,18 +3,18 @@ import {expect} from "chai"
 import {randomNumber, randomExponential, randomString, randomDate} from "@helpers/randomizer";
 import * as consts from '@helpers/regExp.consts.json'
 
-function dateToString(date: Date): string {
-    return date.toLocaleDateString('uk', { day: 'numeric', month: 'numeric', year: 'numeric' });
+
+function formatDateOutput(dateString: string): string {
+    const [year, month, day] = dateString.split('-');
+    return `${month}.${day}.${year}`;
 }
 
-function dateUkFormat(dateString: string): string {
-    const dateArray = dateString.split('-');
-    let ukDate = '';
-    for ( let i = dateArray.length - 1; i > 0; i--) {
-        ukDate += dateArray[i] + '.'
-    }
-    ukDate += dateArray[0];
-    return ukDate;
+function generateRandomDateInput(): string {
+    const date = randomDate();
+    console.log(date.toISOString());
+    const formattedDate = date.toISOString().split('T')[0].replace(/^\+0?/, '');
+    const [year, month, day] = formattedDate.split('-');
+    return `${month}.${day}.${year}`;
 }
 
 describe('Number inputs: ', () => {
@@ -141,14 +141,13 @@ describe('Date inputs: ', () => {
     });
 
     it('valid date could be inserted', async () => {
-        const date = dateToString(randomDate())
+        const dateInput = generateRandomDateInput();
 
-        await WebInputsPage.fillInputDate(date);
+        await WebInputsPage.fillInputDate(dateInput);
         await WebInputsPage.displayInputs();
 
-        const dateOutput = await WebInputsPage.getDateFieldText()
-        const formatedDate = dateUkFormat(dateOutput)
-        expect(formatedDate).to.be.equal(date);
+        const dateOutput = formatDateOutput(await WebInputsPage.getDateFieldText())
+        expect(dateInput).to.be.equal(dateOutput);
     });
 
     it('invalid date could not be inserted', async () => {
