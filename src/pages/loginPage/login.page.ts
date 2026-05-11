@@ -16,6 +16,10 @@ class LoginPageSelectors {
 }
 
 class LoginPage extends LoginPageSelectors {
+    async open(): Promise<void> {
+        await browser.url('/login');
+    }
+
     async setUsername(username: string): Promise<void> {
         await (await this.usernameInput).waitForDisplayed();
         await (await this.usernameInput).setValue(username);

@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { browser } from "@wdio/globals";
 
-import MainPage from "@pages/mainPage/main.page";
 import RegisterPage from "@pages/registerPage/register.page";
 import LoginPage from "@pages/loginPage/login.page";
 import Alert from "@pages/commonComponents/alert";
@@ -18,8 +17,7 @@ describe.skip("Successful registration: ", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
 
-        await MainPage.open();
-        await MainPage.clickTestRegisterInputs();
+        await RegisterPage.open();
     })
 
     it("User could be registered with 3 letters username", async () => {
@@ -67,8 +65,7 @@ describe("Registration with invalid username: ", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
 
-        await MainPage.open();
-        await MainPage.clickTestRegisterInputs();
+        await RegisterPage.open();
     });
 
     it("User could not be registered without username", async () => {
@@ -169,8 +166,7 @@ describe("Registration with invalid password: ", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
 
-        await MainPage.open();
-        await MainPage.clickTestRegisterInputs();
+        await RegisterPage.open();
     });
 
     it("User could not be registered without password", async () => {
@@ -237,8 +233,7 @@ describe.skip("e2e registration: ", async () => {
         const regExp = new RegExp(".*ads.*");
         (await browser.mock(regExp)).abort("Aborted");
 
-        await MainPage.open();
-        await MainPage.clickTestRegisterInputs();
+        await RegisterPage.open();
 
         const username = randomString(consts.USERNAME_INPUT.value, [3, 39]);
         const password = randomString(consts.TEXT_INPUT.value, [4, 15]);

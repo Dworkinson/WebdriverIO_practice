@@ -1,4 +1,3 @@
-import MainPage from "@pages/mainPage/main.page";
 import WebInputsPage from "@pages/webInputs/webInputs.page";
 import {expect} from "chai"
 import {randomNumber, randomExponential, randomString, randomDate} from "@helpers/randomizer";
@@ -23,8 +22,7 @@ describe('Number inputs: ', () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await MainPage.open();
-        await MainPage.clickWebInputs();
+        await WebInputsPage.open();
     });
 
     it('positive number could be inserted', async() => {
@@ -86,8 +84,7 @@ describe('Text inputs: ', () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await MainPage.open();
-        await MainPage.clickWebInputs();
+        await WebInputsPage.open();
     });
 
     it('any text could be inserted', async () => {
@@ -110,8 +107,7 @@ describe('Password inputs: ', () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await MainPage.open();
-        await MainPage.clickWebInputs();
+        await WebInputsPage.open();
     });
 
     it('any text could be a password', async () => {
@@ -141,8 +137,7 @@ describe('Date inputs: ', () => {
         const regExp = new RegExp('.*ads.*');
         (await browser.mock(regExp)).abort('Aborted');
 
-        await MainPage.open();
-        await MainPage.clickWebInputs();
+        await WebInputsPage.open();
     });
 
     it('valid date could be inserted', async () => {

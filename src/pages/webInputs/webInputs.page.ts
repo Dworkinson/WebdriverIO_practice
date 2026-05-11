@@ -43,6 +43,9 @@ class WebInputsPageSelectors {
 }
 
 class WebInputsPage extends WebInputsPageSelectors {
+    async open(): Promise<void> {
+        await browser.url('/inputs')
+    }
     async displayInputs(): Promise<void> {
         await (await this.displayInputsBtn).waitForDisplayed();
         await (await this.displayInputsBtn).scrollIntoView();
