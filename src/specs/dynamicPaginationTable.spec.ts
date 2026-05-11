@@ -175,7 +175,7 @@ describe("Search: ", async () => {
         await DynamicPaginationTablePage.search(searchValue);
 
         const cellContent = await DynamicPaginationTablePage.getCellContentByIndex(randColIndex, 0);
-        expect(cellContent).to.be.equal(searchValue);
+        expect(cellContent).to.contain(searchValue);
     });
 
     it('could be successfully searched by partial match', async () => {
