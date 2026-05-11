@@ -196,8 +196,8 @@ describe("Search: ", async () => {
 
         await DynamicPaginationTablePage.search(searchValuePart);
 
-        const cellContent = (await DynamicPaginationTablePage.getCellContentByIndex(randColIndex, 0)).toLowerCase();
-        expect(cellContent).to.contain(searchValuePart);
+        const rowContent = (await DynamicPaginationTablePage.getRowContentByIndex(0)).toLowerCase();
+        expect(rowContent).to.contain(searchValuePart);
     });
 
     it('no result if searching by non-existing value', async () => {
