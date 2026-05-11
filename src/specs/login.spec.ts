@@ -17,20 +17,6 @@ describe("Login: ", async () => {
         await LoginPage.open();
     });
 
-    it('should be able to login', async () => {
-        const loginUrl = await browser.getUrl();
-        expect(loginUrl).to.include("/login");
-
-        await LoginPage.login(data.username, data.password);
-        expect(await Alert.isAlertDisplayed()).to.be.true;
-
-        const url = await browser.getUrl();
-        expect(url).to.include("/secure");
-        expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
-
-        await SecurePage.clickOnLogoutBtn();
-    });
-
     it('should not be able to login with wrong username', async () => {
         const loginUrl = await browser.getUrl();
         expect(loginUrl).to.include("/login");
@@ -56,6 +42,20 @@ describe("Login: ", async () => {
         expect(url).to.include("/login").and.not.include("/secure");
         expect(await Alert.isAlertDisplayed()).to.be.true;
         expect(await Alert.getAlertText()).to.be.equal(dict.unauthorized_alert.us);
+    });
+
+    it('should be able to login', async () => {
+        const loginUrl = await browser.getUrl();
+        expect(loginUrl).to.include("/login");
+
+        await LoginPage.login(data.username, data.password);
+        expect(await Alert.isAlertDisplayed()).to.be.true;
+
+        const url = await browser.getUrl();
+        expect(url).to.include("/secure");
+        expect(await Alert.getAlertText()).to.be.equal(dict.success_alert.us);
+
+        await SecurePage.clickOnLogoutBtn();
     });
 
     afterEach(async () => {
