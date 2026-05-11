@@ -1,25 +1,21 @@
 import { google } from 'googleapis';
 import * as fs from 'fs-extra';
-import { OAuth2Client } from "google-auth-library";
 
+
+const oAuth2Client = new google.auth.OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    process.env.REDIRECT_URI
+);
 const TOKEN_PATH = process.env.TOKEN_PATH || 'token.json';
+const token = fs.readFileSync(TOKEN_PATH, 'utf8');
+oAuth2Client.setCredentials(JSON.parse(token));
 
-async function authorize(): Promise<OAuth2Client> {
-    const oAuth2Client = new google.auth.OAuth2(
-        process.env.CLIENT_ID,
-        process.env.CLIENT_SECRET,
-        process.env.REDIRECT_URI
-    );
-
-    const token = await fs.readFile(TOKEN_PATH, 'utf8');
-    oAuth2Client.setCredentials(JSON.parse(token));
-    return oAuth2Client;
-}
 
 async function getLatestMessageText(email: string): Promise<string|null> {
     const gmail = google.gmail({
         version: 'v1',
-        auth: await authorize(),
+        auth: oAuth2Client,
     });
 
     const listResponse = await gmail.users.messages.list({
@@ -47,7 +43,7 @@ async function getLatestMessageText(email: string): Promise<string|null> {
 async function deleteMessages(email: string) {
     const gmail = google.gmail({
         version: 'v1',
-        auth: await authorize(),
+        auth: oAuth2Client,
     });
 
     while (true) {
