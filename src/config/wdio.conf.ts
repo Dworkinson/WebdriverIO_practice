@@ -46,7 +46,16 @@ export const config: Options.Testrunner = {
     connectionRetryCount: 3,
     framework: 'mocha',
     
-    reporters: ['spec'],
+    reporters: ['spec',
+        [
+            'allure',
+            {
+                outputDir: 'allure-results',
+                disableWebdriverStepsReporting: true,
+                disableMochaHooks: true
+            }
+        ]
+    ],
 
     mochaOpts: {
         ui: 'bdd',
