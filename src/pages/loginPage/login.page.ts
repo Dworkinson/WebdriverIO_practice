@@ -2,15 +2,15 @@ import { $ } from '@wdio/globals'
 
 
 class LoginPageSelectors {
-    protected get usernameInput(): Promise<WebdriverIO.Element> {
+    protected get usernameInput(): ChainablePromiseElement {
         return $('[type="text"][id="username"]');
     }
 
-    protected get passwordInput(): Promise<WebdriverIO.Element> {
+    protected get passwordInput(): ChainablePromiseElement {
         return $('[type="password"][id="password"]');
     }
 
-    protected get loginBtn(): Promise<WebdriverIO.Element> {
+    protected get loginBtn(): ChainablePromiseElement {
         return $('[type="submit"][id="submit-login"]');
     }
 }
@@ -21,19 +21,19 @@ class LoginPage extends LoginPageSelectors {
     }
 
     async setUsername(username: string): Promise<void> {
-        await (await this.usernameInput).waitForDisplayed();
-        await (await this.usernameInput).setValue(username);
+        await this.usernameInput.waitForDisplayed();
+        await this.usernameInput.setValue(username);
     }
 
     async setPassword(passwd: string): Promise<void> {
-        await (await this.passwordInput).waitForDisplayed();
-        await (await this.passwordInput).setValue(passwd);
+        await this.passwordInput.waitForDisplayed();
+        await this.passwordInput.setValue(passwd);
     }
 
     async clickLoginBtn(): Promise<void> {
-        await (await this.loginBtn).waitForDisplayed();
-        await (await this.loginBtn).scrollIntoView();
-        await (await this.loginBtn).click();
+        await this.loginBtn.waitForDisplayed();
+        await this.loginBtn.scrollIntoView();
+        await this.loginBtn.click();
     }
 
     async login(username: string, password: string): Promise<void> {

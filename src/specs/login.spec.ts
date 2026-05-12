@@ -11,9 +11,6 @@ import * as dict from "@data/dictionary.json"
 
 describe("Login: ", async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await LoginPage.open();
     });
 
