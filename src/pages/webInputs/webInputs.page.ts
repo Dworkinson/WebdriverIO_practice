@@ -1,43 +1,43 @@
-import { $ } from '@wdio/globals';
+import { $, browser } from '@wdio/globals';
 
 class WebInputsPageSelectors {
-    protected get displayInputsBtn(): Promise<WebdriverIO.Element> {
+    protected get displayInputsBtn(): ChainablePromiseElement {
         return $('[id="btn-display-inputs"]');
     }
 
-    protected get clearInputsBtn(): Promise<WebdriverIO.Element> {
+    protected get clearInputsBtn(): ChainablePromiseElement {
         return $('[id="btn-clear-inputs"]');
     }
 
-    protected get inputNumberField(): Promise<WebdriverIO.Element> {
+    protected get inputNumberField(): ChainablePromiseElement {
         return $('[id="input-number"]');
     }
 
-    protected get inputTextField(): Promise<WebdriverIO.Element> {
+    protected get inputTextField(): ChainablePromiseElement {
         return $('[id="input-text"]');
     }
 
-    protected  get inputPasswordField(): Promise<WebdriverIO.Element> {
+    protected  get inputPasswordField(): ChainablePromiseElement {
         return $('[id="input-password"]');
     }
 
-    protected get inputDateField(): Promise<WebdriverIO.Element> {
+    protected get inputDateField(): ChainablePromiseElement {
         return $('[id="input-date"]');
     }
 
-    protected get outputNumberField(): Promise<WebdriverIO.Element> {
+    protected get outputNumberField(): ChainablePromiseElement {
         return $('[id="output-number"]');
     }
 
-    protected get outputTextField(): Promise<WebdriverIO.Element> {
+    protected get outputTextField(): ChainablePromiseElement {
         return $('[id="output-text"]');
     }
 
-    protected get outputPasswordField(): Promise<WebdriverIO.Element> {
+    protected get outputPasswordField(): ChainablePromiseElement {
         return $('[id="output-password"]');
     }
 
-    protected get outputDateField(): Promise<WebdriverIO.Element> {
+    protected get outputDateField(): ChainablePromiseElement {
         return $('[id="output-date"]');
     }
 }
@@ -47,64 +47,64 @@ class WebInputsPage extends WebInputsPageSelectors {
         await browser.url('/inputs')
     }
     async displayInputs(): Promise<void> {
-        await (await this.displayInputsBtn).waitForDisplayed();
-        await (await this.displayInputsBtn).scrollIntoView();
-        await (await this.displayInputsBtn).click();
+        await this.displayInputsBtn.waitForDisplayed();
+        await this.displayInputsBtn.scrollIntoView();
+        await this.displayInputsBtn.click();
     }
 
     async clearInputs(): Promise<void> {
-        await (await this.clearInputsBtn).waitForDisplayed();
-        await (await this.clearInputsBtn).scrollIntoView();
-        await (await this.clearInputsBtn).click();
+        await this.clearInputsBtn.waitForDisplayed();
+        await this.clearInputsBtn.scrollIntoView();
+        await this.clearInputsBtn.click();
     }
 
     async fillInputNumber(value: string|number): Promise<void> {
-        await (await this.inputNumberField).waitForDisplayed();
-        await (await this.inputNumberField).scrollIntoView();
-        await (await this.inputNumberField).setValue(value);
+        await this.inputNumberField.waitForDisplayed();
+        await this.inputNumberField.scrollIntoView();
+        await this.inputNumberField.setValue(value);
     }
 
     async getNumberFieldText(): Promise<string> {
-        await (await this.outputNumberField).waitForDisplayed();
-        return (await this.outputNumberField).getText();
+        await this.outputNumberField.waitForDisplayed();
+        return this.outputNumberField.getText();
     }
 
     async fillInputText(value: string|number): Promise<void> {
-        await (await this.inputTextField).waitForDisplayed();
-        await (await this.inputTextField).scrollIntoView();
-        await (await this.inputTextField).setValue(value);
+        await this.inputTextField.waitForDisplayed();
+        await this.inputTextField.scrollIntoView();
+        await this.inputTextField.setValue(value);
     }
 
     async getTextFieldText(): Promise<string> {
-        await (await this.outputTextField).waitForDisplayed();
-        return (await this.outputTextField).getText();
+        await this.outputTextField.waitForDisplayed();
+        return this.outputTextField.getText();
     }
 
     async fillInputPassword(value: string|number): Promise<void> {
-        await (await this.inputPasswordField).waitForDisplayed();
-        await (await this.inputPasswordField).scrollIntoView();
-        await (await this.inputPasswordField).setValue(value);
+        await this.inputPasswordField.waitForDisplayed();
+        await this.inputPasswordField.scrollIntoView();
+        await this.inputPasswordField.setValue(value);
     }
 
     async getOutputPasswordText(): Promise<string> {
-        await (await this.outputPasswordField).waitForDisplayed();
-        return (await this.outputPasswordField).getText();
+        await this.outputPasswordField.waitForDisplayed();
+        return this.outputPasswordField.getText();
     }
 
-    async getPasswordInputType(): Promise<string> {
-        await (await this.inputPasswordField).waitForDisplayed();
-        return (await this.inputPasswordField).getAttribute('type');
+    async getPasswordInputType(): Promise<string|null> {
+        await this.inputPasswordField.waitForDisplayed();
+        return this.inputPasswordField.getAttribute('type');
     }
 
     async fillInputDate(value: string | any): Promise<void> {
-        await (await this.inputDateField).waitForDisplayed();
-        await (await this.inputDateField).scrollIntoView();
-        await (await this.inputDateField).setValue(value)
+        await this.inputDateField.waitForDisplayed();
+        await this.inputDateField.scrollIntoView();
+        await this.inputDateField.setValue(value)
     }
 
     async getDateFieldText(): Promise<string> {
-        await (await this.outputDateField).waitForDisplayed();
-        return (await this.outputDateField).getText();
+        await this.outputDateField.waitForDisplayed();
+        return this.outputDateField.getText();
     }
 }
 

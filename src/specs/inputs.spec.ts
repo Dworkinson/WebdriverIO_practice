@@ -1,7 +1,8 @@
 import WebInputsPage from "@pages/webInputs/webInputs.page";
-import {expect} from "chai"
-import {randomNumber, randomExponential, randomString, randomDate} from "@helpers/randomizer";
+import { expect } from "chai"
+import { randomNumber, randomExponential, randomString, randomDate } from "@helpers/randomizer";
 import * as consts from '@helpers/regExp.consts.json'
+import { adBlocker } from "@helpers/adBlocker";
 
 
 function formatDateOutput(dateString: string): string {
@@ -19,8 +20,7 @@ function generateRandomDateInput(): string {
 
 describe('Number inputs: ', () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
+        await adBlocker();
 
         await WebInputsPage.open();
     });
@@ -81,8 +81,7 @@ describe('Number inputs: ', () => {
 
 describe('Text inputs: ', () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
+        await adBlocker();
 
         await WebInputsPage.open();
     });
@@ -104,8 +103,7 @@ describe('Text inputs: ', () => {
 
 describe('Password inputs: ', () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
+        await adBlocker();
 
         await WebInputsPage.open();
     });
@@ -134,8 +132,7 @@ describe('Password inputs: ', () => {
 
 describe('Date inputs: ', () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
+        await adBlocker();
 
         await WebInputsPage.open();
     });
