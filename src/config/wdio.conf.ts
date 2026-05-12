@@ -1,6 +1,3 @@
-import type { Options } from '@wdio/types'
-
-import 'tsconfig-paths/register';
 import dotenv from 'dotenv';
 import minimist from 'minimist';
 import path from "path";
@@ -17,16 +14,10 @@ if (!fs.existsSync(downloadDir)) {
     fs.mkdirSync(downloadDir, { recursive: true })
 }
 
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
     runner: 'local',
-    autoCompileOpts: {
-        autoCompile: true,
-        tsNodeOpts: {
-            project: './tsconfig.json',
-            transpileOnly: true
-        }
-    },
-    rootDir: ".",
+    tsConfigPath: './tsconfig.json',
+    rootDir: '.',
     specs: [
         './src/specs/**/*.spec.ts'
     ],
@@ -34,7 +25,6 @@ export const config: Options.Testrunner = {
     exclude: [
     ],
     maxInstances: 10,
-    services: ['chromedriver'],
     capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
@@ -64,14 +54,14 @@ export const config: Options.Testrunner = {
     framework: 'mocha',
     
     reporters: ['spec',
-        [
-            'allure',
-            {
-                outputDir: 'allure-results',
-                disableWebdriverStepsReporting: true,
-                disableMochaHooks: true
-            }
-        ]
+        // [
+        //     'allure',
+        //     {
+        //         outputDir: 'allure-results',
+        //         disableWebdriverStepsReporting: true,
+        //         disableMochaHooks: true
+        //     }
+        // ]
     ],
 
     mochaOpts: {
