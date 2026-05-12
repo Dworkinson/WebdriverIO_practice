@@ -14,9 +14,6 @@ import SecurePage from "@pages/loginPage/secure.page";
 
 describe.skip("Successful registration: ", async () => {
     before(async () => {
-        const regExp = new RegExp(".*ads.*");
-        (await browser.mock(regExp)).abort("Aborted");
-
         await RegisterPage.open();
     })
 
@@ -62,9 +59,6 @@ describe.skip("Successful registration: ", async () => {
 
 describe("Registration with invalid username: ", async () => {
     before(async () => {
-        const regExp = new RegExp(".*ads.*");
-        (await browser.mock(regExp)).abort("Aborted");
-
         await RegisterPage.open();
     });
 
@@ -163,9 +157,6 @@ describe("Registration with invalid username: ", async () => {
 
 describe("Registration with invalid password: ", async () => {
     before(async () => {
-        const regExp = new RegExp(".*ads.*");
-        (await browser.mock(regExp)).abort("Aborted");
-
         await RegisterPage.open();
     });
 
@@ -230,9 +221,6 @@ describe("Registration with invalid password: ", async () => {
 
 describe.skip("e2e registration: ", async () => {
     it("New user could successfully login after registration", async () => {
-        const regExp = new RegExp(".*ads.*");
-        (await browser.mock(regExp)).abort("Aborted");
-
         await RegisterPage.open();
 
         const username = randomString(consts.USERNAME_INPUT.value, [3, 39]);
