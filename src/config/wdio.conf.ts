@@ -27,6 +27,7 @@ export const config: WebdriverIO.Config = {
     maxInstances: 10,
     capabilities: [{
         browserName: 'chrome',
+        pageLoadStrategy: "none",
         'goog:chromeOptions': {
             args: [
                 '--disable-background-networking',
@@ -68,4 +69,8 @@ export const config: WebdriverIO.Config = {
         ui: 'bdd',
         timeout: 60000
     },
+
+    async before() {
+        (await browser.mock('*ads*')).abort()
+    }
 }
