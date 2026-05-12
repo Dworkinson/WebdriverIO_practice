@@ -30,3 +30,5 @@ package-lock.json
 
 allure-*
 *.upload
+
+tmp

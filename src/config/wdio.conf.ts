@@ -1,11 +1,21 @@
 import type { Options } from '@wdio/types'
 
 import 'tsconfig-paths/register';
-
 import dotenv from 'dotenv';
 import minimist from 'minimist';
+import path from "path";
+import fs from 'fs';
+
+
 const env = minimist(process.argv).ENV || '.env.example';
 dotenv.config({ path: env })
+
+
+const downloadDir = path.resolve(process.cwd(), 'tmp')
+
+if (!fs.existsSync(downloadDir)) {
+    fs.mkdirSync(downloadDir, { recursive: true })
+}
 
 export const config: Options.Testrunner = {
     runner: 'local',
@@ -36,7 +46,12 @@ export const config: Options.Testrunner = {
             ],
             prefs: {
                 // preventing "weak password" warning
-                'profile.password_manager_leak_detection': false
+                'profile.password_manager_leak_detection': false,
+                // downloading prefs
+                'download.default_directory': downloadDir,
+                'download.prompt_for_download': false,
+                'download.directory_upgrade': true,
+                'safebrowsing.enabled': true
             }
         }
     }],
