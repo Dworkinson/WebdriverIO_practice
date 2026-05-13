@@ -24,6 +24,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
     "@types/chai": "^5.2.3",
+    "@types/fs-extra": "^11.0.4",
     "@types/minimist": "^1.2.5",
     "@types/node": "^25.7.0",
     "@wdio/cli": "^9.27.1",
@@ -32,10 +33,10 @@
     "@wdio/mocha-framework": "^9.27.1",
     "@wdio/spec-reporter": "^9.27.1",
     "chai": "^6.2.2",
+    "fs-extra": "^11.3.5",
+    "googleapis": "^171.4.0",
+    "minimist": "^1.2.8",
     "randexp": "^0.5.3"
   },
-  "private": true,
-  "dependencies": {
-    "minimist": "^1.2.8"
-  }
+  "private": true
 }
