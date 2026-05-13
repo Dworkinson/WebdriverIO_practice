@@ -27,13 +27,14 @@ export const config: WebdriverIO.Config = {
     capabilities: [{
         webSocketUrl: false,
         browserName: 'chrome',
-        pageLoadStrategy: "normal",
+        pageLoadStrategy: "eager",
         'goog:chromeOptions': {
             args: [
                 '--disable-background-networking',
                 '--disable-sync',
                 '--disable-extensions',
-                '--lang=en-US'
+                '--lang=en-US',
+                '--host-rules=MAP *ads* 127.0.0.1',
             ],
             prefs: {
                 // preventing "weak password" warning
@@ -71,6 +72,11 @@ export const config: WebdriverIO.Config = {
     },
 
     async before() {
-        (await browser.mock('*ads*')).abort()
+        const mock = await browser.mock('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client*');
+        mock.respond({})
+    },
+
+    async after() {
+
     }
 }
