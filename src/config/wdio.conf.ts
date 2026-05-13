@@ -3,7 +3,6 @@ import minimist from 'minimist';
 import path from "path";
 import fs from 'fs';
 
-
 const env = minimist(process.argv).ENV || '.env.example';
 dotenv.config({ path: env })
 
@@ -26,8 +25,9 @@ export const config: WebdriverIO.Config = {
     ],
     maxInstances: 10,
     capabilities: [{
+        webSocketUrl: false,
         browserName: 'chrome',
-        pageLoadStrategy: "none",
+        pageLoadStrategy: "normal",
         'goog:chromeOptions': {
             args: [
                 '--disable-background-networking',
