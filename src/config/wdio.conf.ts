@@ -56,14 +56,14 @@ export const config: WebdriverIO.Config = {
     framework: 'mocha',
     
     reporters: ['spec',
-        // [
-        //     'allure',
-        //     {
-        //         outputDir: 'allure-results',
-        //         disableWebdriverStepsReporting: true,
-        //         disableMochaHooks: true
-        //     }
-        // ]
+        [
+            'allure',
+            {
+                outputDir: 'allure-results',
+                disableWebdriverStepsReporting: true,
+                disableMochaHooks: true
+            }
+        ]
     ],
 
     mochaOpts: {
