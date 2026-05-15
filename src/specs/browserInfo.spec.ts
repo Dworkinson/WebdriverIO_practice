@@ -1,14 +1,8 @@
-import {browser} from "@wdio/globals";
 import {expect} from "chai";
 
 import BrowserInfoPage, {NavigatorKeys} from "@pages/browserInfoPage/browserInfo.page";
 
 describe('Browser info: ', async () => {
-    before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-    });
-
     it('could get browser info', async () => {
         await BrowserInfoPage.open();
         await BrowserInfoPage.showBrowserInfo();

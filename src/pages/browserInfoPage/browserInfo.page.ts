@@ -13,67 +13,67 @@ class BrowserInfoPage {
         await browser.url('/my-browser');
     }
 
-    private get browserToggleBtn(): Promise<WebdriverIO.Element> {
+    private get browserToggleBtn(): ChainablePromiseElement {
         return $('[id="browser-toggle"]');
     }
 
-    private get userAgent(): Promise<WebdriverIO.Element> {
+    private get userAgent(): ChainablePromiseElement {
         return $('[id="browser-user-agent"]');
     }
 
-    private get codeName(): Promise<WebdriverIO.Element> {
+    private get codeName(): ChainablePromiseElement {
         return $('[id="browser-code-name"]');
     }
 
-    private get name(): Promise<WebdriverIO.Element> {
+    private get name(): ChainablePromiseElement {
         return $('[id="browser-name"]');
     }
 
-    private get version(): Promise<WebdriverIO.Element> {
+    private get version(): ChainablePromiseElement {
         return $('[id="browser-version"]');
     }
 
-    private get cookiesEnabled(): Promise<WebdriverIO.Element> {
+    private get cookiesEnabled(): ChainablePromiseElement {
         return $('[id="browser-cookie"]');
     }
 
-    private get platform(): Promise<WebdriverIO.Element> {
+    private get platform(): ChainablePromiseElement {
         return $('[id="browser-platform"]');
     }
 
     async showBrowserInfo(): Promise<void> {
-        await (await this.browserToggleBtn).waitForClickable()
-        await (await this.browserToggleBtn).click();
+        await this.browserToggleBtn.waitForClickable()
+        await this.browserToggleBtn.click();
     }
 
     async getUserAgent(): Promise<string> {
-        await (await this.userAgent).waitForDisplayed();
-        return (await this.userAgent).getText();
+        await this.userAgent.waitForDisplayed();
+        return this.userAgent.getText();
     }
 
     async getCodeName(): Promise<string> {
-        await (await this.codeName).waitForDisplayed();
-        return (await this.codeName).getText();
+        await this.codeName.waitForDisplayed();
+        return this.codeName.getText();
     }
 
     async getName(): Promise<string> {
-        await (await this.name).waitForDisplayed();
-        return (await this.name).getText();
+        await this.name.waitForDisplayed();
+        return this.name.getText();
     }
 
     async getVersion(): Promise<string> {
-        await (await this.version).waitForDisplayed();
-        return (await this.version).getText();
+        await this.version.waitForDisplayed();
+        return this.version.getText();
     }
 
     async getCookiesEnabled(): Promise<string> {
-        await (await this.cookiesEnabled).waitForDisplayed();
-        return (await this.cookiesEnabled).getText();
+        await this.cookiesEnabled.waitForDisplayed();
+        return this.cookiesEnabled.getText();
     }
 
     async getPlatform(): Promise<string> {
-        await (await this.platform).waitForDisplayed();
-        return (await this.platform).getText();
+        await this.platform.waitForDisplayed();
+        return this.platform.getText();
     }
 
     async getBrowserProperty(prop: NavigatorKeys): Promise<string> {
