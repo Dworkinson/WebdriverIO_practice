@@ -1,28 +1,25 @@
-import { $ } from '@wdio/globals'
-
-
 class Alert {
-    private get alert(): Promise<WebdriverIO.Element> {
+    private get alert(): ChainablePromiseElement {
         return $('[id="flash"]');
     }
 
-    private get alertCloseBtn(): Promise<WebdriverIO.Element> {
+    private get alertCloseBtn(): ChainablePromiseElement {
         return $('[id="flash"] button[type="button"]')
     }
 
     async isAlertDisplayed(): Promise<boolean> {
-        await (await this.alert).waitForDisplayed();
-        return (await this.alert).isDisplayed();
+        await this.alert.waitForDisplayed();
+        return this.alert.isDisplayed();
     }
 
     async getAlertText(): Promise<string> {
-        await (await this.alert).waitForDisplayed();
-        return (await this.alert).getText();
+        await this.alert.waitForDisplayed();
+        return this.alert.getText();
     }
 
     async clickAlertCloseBtn(): Promise<void> {
-        await (await this.alert).waitForClickable();
-        await (await this.alertCloseBtn).click();
+        await this.alert.waitForClickable();
+        await this.alertCloseBtn.click();
     }
 }
 

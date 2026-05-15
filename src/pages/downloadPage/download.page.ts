@@ -7,7 +7,7 @@ class DownloadPage {
     }
 
     async downloadFileByDataTestId(dataTestId: string): Promise<void> {
-        const fileLink = await $(`[data-testid="${dataTestId}"]`);
+        const fileLink = $(`[data-testid="${dataTestId}"]`);
 
         await fileLink.waitForDisplayed();
         await fileLink.scrollIntoView();

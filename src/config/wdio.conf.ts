@@ -1,11 +1,7 @@
-import type { Options } from '@wdio/types'
-
-import 'tsconfig-paths/register';
 import dotenv from 'dotenv';
 import minimist from 'minimist';
 import path from "path";
 import fs from 'fs';
-
 
 const env = minimist(process.argv).ENV || '.env.example';
 dotenv.config({ path: env })
@@ -17,16 +13,10 @@ if (!fs.existsSync(downloadDir)) {
     fs.mkdirSync(downloadDir, { recursive: true })
 }
 
-export const config: Options.Testrunner = {
+export const config: WebdriverIO.Config = {
     runner: 'local',
-    autoCompileOpts: {
-        autoCompile: true,
-        tsNodeOpts: {
-            project: './tsconfig.json',
-            transpileOnly: true
-        }
-    },
-    rootDir: ".",
+    tsConfigPath: './tsconfig.json',
+    rootDir: '.',
     specs: [
         './src/specs/**/*.spec.ts'
     ],
@@ -34,15 +24,17 @@ export const config: Options.Testrunner = {
     exclude: [
     ],
     maxInstances: 10,
-    services: ['chromedriver'],
     capabilities: [{
+        webSocketUrl: false,
         browserName: 'chrome',
+        pageLoadStrategy: "eager",
         'goog:chromeOptions': {
             args: [
                 '--disable-background-networking',
                 '--disable-sync',
                 '--disable-extensions',
-                '--lang=en-US'
+                '--lang=en-US',
+                '--host-rules=MAP *ads* 127.0.0.1',
             ],
             prefs: {
                 // preventing "weak password" warning
@@ -78,4 +70,13 @@ export const config: Options.Testrunner = {
         ui: 'bdd',
         timeout: 60000
     },
+
+    async before() {
+        const mock = await browser.mock('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client*');
+        mock.respond({})
+    },
+
+    async after() {
+
+    }
 }

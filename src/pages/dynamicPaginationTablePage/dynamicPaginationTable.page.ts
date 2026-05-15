@@ -2,58 +2,55 @@ export { $, browser } from '@wdio/globals';
 
 
 class DynamicPaginationTablePageSelectors {
-    protected get searchInput(): Promise<WebdriverIO.Element> {
+    protected get searchInput(): ChainablePromiseElement {
         return $('input[type="search"]');
     }
 
-    protected get previousPaginatorButton(): Promise<WebdriverIO.Element> {
+    protected get previousPaginatorButton(): ChainablePromiseElement {
         return $('[id="example_previous"]');
     }
 
-    protected get nextPaginatorButton(): Promise<WebdriverIO.Element> {
+    protected get nextPaginatorButton(): ChainablePromiseElement {
         return $('[id="example_next"]');
     }
 
-    protected get numeratedPaginatorButtons(): Promise<WebdriverIO.ElementArray> {
+    protected get numeratedPaginatorButtons(): ChainablePromiseArray {
         return $$('[class*="paginate_button"]:not([class*="previous"]):not([class*="next"])');
     }
 
-    protected get entriesSelectDropdown(): Promise<WebdriverIO.Element> {
+    protected get entriesSelectDropdown(): ChainablePromiseElement {
         return $('[id="example_length"] [name="example_length"]');
     }
 
-    protected get entriesQuantityDropdown(): Promise<WebdriverIO.ElementArray> {
+    protected get entriesQuantityDropdown(): ChainablePromiseArray {
         return $$('option[value]');
     }
 
-    protected get tableRows(): Promise<WebdriverIO.ElementArray> {
+    protected get tableRows(): ChainablePromiseArray {
         return $$('[id="demo"] tr')
     }
 
-    protected get tableColumns(): Promise<WebdriverIO.ElementArray> {
+    protected get tableColumns(): ChainablePromiseArray {
         return $$('th[class*="sorting"]');
     }
 
-    protected async getPageByIndex(pageIndex: number): Promise<WebdriverIO.Element> {
-        await (await this.numeratedPaginatorButtons)[pageIndex].waitForDisplayed();
-        return (await this.numeratedPaginatorButtons)[pageIndex];
+    protected async getPageByIndex(pageIndex: number): Promise<ChainablePromiseElement> {
+        return this.numeratedPaginatorButtons[pageIndex];
     }
 
-    protected async getDropdownOptionByIndex(index: number): Promise<WebdriverIO.Element> {
-        await (await this.entriesQuantityDropdown)[index].waitForDisplayed();
-        return (await this.entriesQuantityDropdown)[index];
+    protected async getDropdownOptionByIndex(index: number): Promise<ChainablePromiseElement> {
+        return this.entriesQuantityDropdown[index];
     }
 
-    protected async getColumnTitleByIndex(index: number): Promise<WebdriverIO.Element> {
-        await (await this.tableColumns)[index].waitForDisplayed();
-        return (await this.tableColumns)[index];
+    protected async getColumnTitleByIndex(index: number): Promise<ChainablePromiseElement> {
+        return this.tableColumns[index];
     }
 
     async getCellContentByIndex(columnIndex: number, rowIndex: number): Promise<string> {
-        const row = (await this.tableRows)[rowIndex];
+        const row = this.tableRows[rowIndex];
 
         await row.waitForDisplayed();
-        const cell = await row.$$('td')[columnIndex];
+        const cell = row.$$('td')[columnIndex];
         if (!cell) {
             throw new Error(`Cell with index ${columnIndex} and row index ${rowIndex} not found`);
         }
@@ -68,62 +65,63 @@ class DynamicPaginationTablePage extends DynamicPaginationTablePageSelectors {
     }
 
     async isPreviousButtonDisabled(): Promise<boolean> {
-        await (await this.previousPaginatorButton).waitForDisplayed();
-        return await (await this.previousPaginatorButton)
+        await this.previousPaginatorButton.waitForDisplayed();
+        return await this.previousPaginatorButton
             .$('a[aria-controls]')
             .getAttribute('aria-disabled') === 'true';
     }
 
     async isNextButtonDisabled(): Promise<boolean> {
-        await (await this.nextPaginatorButton).waitForDisplayed();
-        return await (await this.nextPaginatorButton)
+        await this.nextPaginatorButton.waitForDisplayed();
+        return await this.nextPaginatorButton
             .$('a[aria-controls]').getAttribute('aria-disabled') === 'true';
     }
 
     async isNumeratedButtonActive(pageIndex: number): Promise<boolean> {
         const page = await this.getPageByIndex(pageIndex);
-        return (await page.getAttribute('class')).includes('active');
+        const exists = await page.getAttribute('class');
+        return exists ? exists.includes('active') : false;
     }
 
     async getPageQuantity(): Promise<number> {
-        return (await this.numeratedPaginatorButtons).length;
+        return this.numeratedPaginatorButtons.length;
     }
 
     async toNextPage(): Promise<void> {
-        await (await this.nextPaginatorButton).waitForDisplayed();
-        await (await this.nextPaginatorButton).scrollIntoView();
-        await (await this.nextPaginatorButton).click();
+        await this.nextPaginatorButton.waitForDisplayed();
+        await this.nextPaginatorButton.scrollIntoView();
+        await this.nextPaginatorButton.click();
     }
 
     async toPreviousPage(): Promise<void> {
-        await (await this.previousPaginatorButton).waitForDisplayed();
-        await (await this.previousPaginatorButton).scrollIntoView();
-        await (await this.previousPaginatorButton).click();
+        await this.previousPaginatorButton.waitForDisplayed();
+        await this.previousPaginatorButton.scrollIntoView();
+        await this.previousPaginatorButton.click();
     }
 
     async toNumeratedPage(pageIndex: number): Promise<void> {
-        await (await this.numeratedPaginatorButtons)[pageIndex].waitForDisplayed();
-        await (await this.numeratedPaginatorButtons)[pageIndex].scrollIntoView();
+        await this.numeratedPaginatorButtons[pageIndex].waitForDisplayed();
+        await this.numeratedPaginatorButtons[pageIndex].scrollIntoView();
         await (await this.getPageByIndex(pageIndex)).click();
     }
 
     async getRowsQuantity(): Promise<number> {
-        return (await this.tableRows).length;
+        return this.tableRows.length;
     }
 
     async getColumnsQuantity(): Promise<number> {
-        return (await this.tableColumns).length;
+        return this.tableColumns.length;
     }
 
     async chooseDropdownValueByIndex(index: number): Promise<void> {
-        await (await this.entriesSelectDropdown).waitForDisplayed();
-        await (await this.entriesSelectDropdown).scrollIntoView();
-        await (await this.entriesSelectDropdown).click();
+        await this.entriesSelectDropdown.waitForDisplayed();
+        await this.entriesSelectDropdown.scrollIntoView();
+        await this.entriesSelectDropdown.click();
 
         await (await this.getDropdownOptionByIndex(index)).click();
     }
 
-    async getSortingDirection(columnIndex: number): Promise<string> {
+    async getSortingDirection(columnIndex: number): Promise<string | null> {
         return await (await this.getColumnTitleByIndex(columnIndex)).getAttribute('aria-sort');
     }
 
@@ -136,12 +134,12 @@ class DynamicPaginationTablePage extends DynamicPaginationTablePageSelectors {
     }
 
     async search(searchingValue: string): Promise<void> {
-        await (await this.searchInput).waitForDisplayed();
-        await (await this.searchInput).setValue(searchingValue);
+        await this.searchInput.waitForDisplayed();
+        await this.searchInput.setValue(searchingValue);
     }
 
     async getRowContentByIndex(rowIndex: number): Promise<string> {
-        const row = (await this.tableRows)[rowIndex];
+        const row = this.tableRows[rowIndex];
         await row.waitForDisplayed();
         return await row.getText();
     }

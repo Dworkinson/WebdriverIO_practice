@@ -1,4 +1,3 @@
-import { browser } from "@wdio/globals";
 import { expect } from "chai";
 
 import UploadFilePage from "@pages/uploadFilePage/uploadFile.page";
@@ -11,11 +10,6 @@ const fileLess500KbName = 'uploadFileLess500KbPath.upload';
 const fileLarger500KbPath = 'src/data/fileLarger500KbPath.upload';
 
 describe('File uploading', async () => {
-    before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-    });
-
     it('should be able to upload file', async () => {
         await UploadFilePage.open();
         await UploadFilePage.fillUploadInput(fileLess500KbPath);

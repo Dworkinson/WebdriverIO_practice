@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2021",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "resolveJsonModule": true,
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "noUnusedLocals": true,
     "skipLibCheck": true,
     "types" : [
-      "mocha", "@wdio/globals", "node"
+      "mocha", "@wdio/globals/types", "node"
     ],
     "paths": {
       "@pages/*": ["./src/pages/*"],

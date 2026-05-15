@@ -6,51 +6,51 @@ class OtpPage {
         await browser.url('/otp-login');
     }
 
-    private get emailInput(): Promise<WebdriverIO.Element> {
+    private get emailInput(): ChainablePromiseElement {
         return $('[id="email"]');
     }
 
-    private get sendBtn(): Promise<WebdriverIO.Element> {
+    private get sendBtn(): ChainablePromiseElement {
         return $('[id="btn-send-otp"]');
     }
 
-    private get infoMessage(): Promise<WebdriverIO.Element> {
+    private get infoMessage(): ChainablePromiseElement {
         return $('[id="otp-message"]');
     }
 
-    private get verifyBtn(): Promise<WebdriverIO.Element> {
+    private get verifyBtn(): ChainablePromiseElement {
         return $('[id="btn-send-verify"]');
     }
 
-    private get otpInput(): Promise<WebdriverIO.Element> {
+    private get otpInput(): ChainablePromiseElement {
         return $('[id="otp"]');
     }
 
     async setEmail(email: string): Promise<void> {
-        await (await this.emailInput).waitForDisplayed();
-        await (await this.emailInput).setValue(email);
+        await this.emailInput.waitForDisplayed();
+        await this.emailInput.setValue(email);
     }
 
     async clickSendBtn(): Promise<void> {
-        await (await this.sendBtn).waitForClickable();
-        await (await this.sendBtn).scrollIntoView();
-        await (await this.sendBtn).click();
+        await this.sendBtn.waitForClickable();
+        await this.sendBtn.scrollIntoView();
+        await this.sendBtn.click();
     }
 
     async getInfoMessage(): Promise<string> {
-        await (await this.infoMessage).waitForDisplayed();
-        return (await this.infoMessage).getText();
+        await this.infoMessage.waitForDisplayed();
+        return this.infoMessage.getText();
     }
 
     async setOtp(opt: string): Promise<void> {
-        await (await this.otpInput).waitForDisplayed();
-        await (await this.otpInput).setValue(opt);
+        await this.otpInput.waitForDisplayed();
+        await this.otpInput.setValue(opt);
     }
 
     async clickVerifyBtn(): Promise<void> {
-        await (await this.verifyBtn).waitForClickable();
-        await (await this.verifyBtn).scrollIntoView();
-        await (await this.verifyBtn).click();
+        await this.verifyBtn.waitForClickable();
+        await this.verifyBtn.scrollIntoView();
+        await this.verifyBtn.click();
     }
 
     async sendOtp(email: string): Promise<void> {

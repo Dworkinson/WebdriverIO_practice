@@ -1,4 +1,3 @@
-import { browser } from "@wdio/globals";
 import { expect } from "chai";
 
 import ForgotPasswordPage from "@pages/forgotPasswordPage/forgotPassword.page";
@@ -20,9 +19,6 @@ function getRedirectUrl(regExp: RegExp, msg: string) {
 
 describe('Forgot Password', async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await ForgotPasswordPage.open();
         await waitForResult(deleteMessages, [testEmail]);
     });

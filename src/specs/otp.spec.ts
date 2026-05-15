@@ -24,11 +24,6 @@ function getOtpCode(regExp: RegExp, msg: string): string {
 
 
 describe('OTP: ', () => {
-    before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-    });
-
     it('should not be able to login with invalid OTP', async () => {
         await OtpPage.open();
 

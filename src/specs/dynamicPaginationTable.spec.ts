@@ -1,4 +1,3 @@
-import { browser } from "@wdio/globals";
 import { expect } from "chai";
 import DynamicPaginationTablePage from "@pages/dynamicPaginationTablePage/dynamicPaginationTable.page";
 import { faker } from "@faker-js/faker";
@@ -45,9 +44,6 @@ async function checkSorting(field: ColumnIndex) {
 // in case where new columns without sorting could be added, there is a separate test for each column.
 describe("Sorting dynamic pagination table: ", async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await DynamicPaginationTablePage.open();
         await DynamicPaginationTablePage.chooseDropdownValueByIndex(DropdownValueIndex.All);
     });
@@ -83,9 +79,6 @@ describe("Sorting dynamic pagination table: ", async () => {
 
 describe("Pagination of dynamic table: ", async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await DynamicPaginationTablePage.open();
     });
 
@@ -128,9 +121,6 @@ describe("Pagination of dynamic table: ", async () => {
 
 describe("Rows quantity in pagination table: ", async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await DynamicPaginationTablePage.open();
     });
 
@@ -157,9 +147,6 @@ describe("Rows quantity in pagination table: ", async () => {
 // no difference in searching by name, gender, etc.
 describe("Search: ", async () => {
     before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-
         await DynamicPaginationTablePage.open();
         await DynamicPaginationTablePage.chooseDropdownValueByIndex(DropdownValueIndex.All);
     });

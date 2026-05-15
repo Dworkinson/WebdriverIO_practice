@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { browser } from "@wdio/globals";
 
 import DragAndDropCirclePage, {Color} from "@pages/dragAndDropCirclePage/dragAndDropCircle.page";
 
@@ -7,11 +6,6 @@ import { shuffleArray } from "@helpers/randomizer";
 
 
 describe('Circle Drag and Drop', async () => {
-    before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-    });
-
     it('circles could be dragged to the box', async () => {
         await DragAndDropCirclePage.open();
 

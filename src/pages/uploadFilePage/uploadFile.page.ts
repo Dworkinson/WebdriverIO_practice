@@ -6,43 +6,43 @@ class UploadFilePage {
         await browser.url('/upload');
     }
 
-    private get fileInput(): Promise<WebdriverIO.Element> {
+    private get fileInput(): ChainablePromiseElement {
         return $('[data-testid="file-input"]');
     }
 
-    private get uploadBtn(): Promise<WebdriverIO.Element> {
+    private get uploadBtn(): ChainablePromiseElement {
         return $('[data-testid="file-submit"]');
     }
 
-    private get uploadedInfo(): Promise<WebdriverIO.Element> {
+    private get uploadedInfo(): ChainablePromiseElement {
         return $('[id="uploaded-files"]');
     }
 
-    private get alert(): Promise<WebdriverIO.Element> {
+    private get alert(): ChainablePromiseElement {
         return $('[id="flash"]');
     }
 
     async fillUploadInput(filePath: string): Promise<void> {
         const remoteFilePath = await browser.uploadFile(filePath);
 
-        await (await this.fileInput).waitForDisplayed();
-        await (await this.fileInput).setValue(remoteFilePath);
+        await this.fileInput.waitForDisplayed();
+        await this.fileInput.setValue(remoteFilePath);
     }
 
     async clickUploadBtn(): Promise<void> {
-        await (await this.uploadBtn).waitForDisplayed();
-        await (await this.uploadBtn).scrollIntoView();
-        await (await this.uploadBtn).click();
+        await this.uploadBtn.waitForDisplayed();
+        await this.uploadBtn.scrollIntoView();
+        await this.uploadBtn.click();
     }
 
     async getAlertText(): Promise<string> {
-        await (await this.alert).waitForDisplayed();
-        return (await this.alert).getText();
+        await this.alert.waitForDisplayed();
+        return this.alert.getText();
     }
 
     async getUploadedText(): Promise<string> {
-        await (await this.uploadedInfo).waitForDisplayed();
-        return (await this.uploadedInfo).getText();
+        await this.uploadedInfo.waitForDisplayed();
+        return this.uploadedInfo.getText();
     }
 }
 
