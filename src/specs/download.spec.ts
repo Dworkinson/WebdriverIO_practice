@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { browser } from "@wdio/globals";
 import fs from 'fs';
 import path from 'path';
 
@@ -14,11 +13,6 @@ const fileIds: string[] = [
 ];
 
 describe("Downloading files: ", async () => {
-    before(async () => {
-        const regExp = new RegExp('.*ads.*');
-        (await browser.mock(regExp)).abort('Aborted');
-    });
-
     it('existing files could be downloaded', async () => {
         const downloadDir = path.join(process.cwd(), 'tmp');
         await DownloadPage.open();
