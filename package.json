@@ -16,7 +16,8 @@
     "browserInfoTest": "wdio src/config/wdio.conf.ts --spec browserInfo.spec.ts --ENV .env/.env.stage",
     "dragAndDropCircleTest": "wdio src/config/wdio.conf.ts --spec dragAndDropCircle.spec.ts --ENV .env/.env.stage",
     "uploadFileTest": "wdio src/config/wdio.conf.ts --spec uploadFile.spec.ts --ENV .env/.env.stage",
-    "downloadTest": "wdio src/config/wdio.conf.ts --spec download.spec.ts --ENV .env/.env.stage"
+    "downloadTest": "wdio src/config/wdio.conf.ts --spec download.spec.ts --ENV .env/.env.stage",
+    "downloadSecureTest": "wdio src/config/wdio.conf.ts --spec downloadSecure.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",

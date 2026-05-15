@@ -6,6 +6,11 @@ class DownloadPage {
         await browser.url('/download');
     }
 
+    async isDownloadVisible(dataTestId: string): Promise<boolean> {
+        const fileLink = $(`[data-testid="${dataTestId}"]`);
+        return fileLink.isDisplayed();
+    }
+
     async downloadFileByDataTestId(dataTestId: string): Promise<void> {
         const fileLink = $(`[data-testid="${dataTestId}"]`);
 
