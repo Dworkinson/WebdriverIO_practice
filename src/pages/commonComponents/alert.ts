@@ -1,6 +1,3 @@
-import { $ } from '@wdio/globals'
-
-
 class Alert {
     private get alert(): ChainablePromiseElement {
         return $('[id="flash"]');
