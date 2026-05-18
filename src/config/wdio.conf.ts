@@ -74,9 +74,5 @@ export const config: WebdriverIO.Config = {
     async before() {
         const mock = await browser.mock('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client*');
         mock.respond({})
-    },
-
-    async after() {
-
     }
 }
