@@ -45,17 +45,17 @@ class DialogsPage {
         return this.dialogResponseText.getText()
     }
 
-    handleDialog(accept: boolean, text?: string): void {
-        // it just does not work with "once"
-        browser.on('dialog', async (dialog) => {
-            if (accept) {
-                await dialog.accept(text);
-            } else {
-                await dialog.dismiss();
+    handleDialog(accept: boolean, text?: string): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            const handler = async (dialog: WebdriverIO.Dialog) => {
+                await(accept ? dialog.accept(text) : dialog.dismiss())
+                resolve(dialog.message());
+
+                browser.off('dialog', handler)
             }
-            // but I want to be sure that handler is removed
-            browser.removeAllListeners('dialog')
-        })
+
+            browser.on('dialog', handler);
+        });
     }
 }
 
