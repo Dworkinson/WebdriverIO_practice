@@ -18,7 +18,8 @@
     "uploadFileTest": "wdio src/config/wdio.conf.ts --spec uploadFile.spec.ts --ENV .env/.env.stage",
     "downloadTest": "wdio src/config/wdio.conf.ts --spec download.spec.ts --ENV .env/.env.stage",
     "downloadSecureTest": "wdio src/config/wdio.conf.ts --spec downloadSecure.spec.ts --ENV .env/.env.stage",
-    "slowTest": "wdio src/config/wdio.conf.ts --spec slow.spec.ts --ENV .env/.env.stage"
+    "slowTest": "wdio src/config/wdio.conf.ts --spec slow.spec.ts --ENV .env/.env.stage",
+    "dialogsTest": "wdio src/config/wdio.conf.ts --spec dialogs.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
