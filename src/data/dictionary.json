@@ -34,5 +34,8 @@
   },
   "wrong_otp": {
     "us": "The provided OTP code is incorrect. Please check your code and try again."
+  },
+  "slow_resource_message": {
+    "us": "The slow task has finished. Thanks for waiting!"
   }
 }
