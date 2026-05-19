@@ -6,25 +6,32 @@
  * @param {number} timeout - waiting timeout in milliseconds.
  * @param {number} interval - interval (delay) to check in milliseconds.
  */
-async function waitForResult(
-    func: Function,
-    args?: any[],
+/**
+ * Custom waiter for a function returning its result.
+ *
+ * @param func - function you want to wait for a result.
+ * @param args - optional arguments for function.
+ * @param timeout - waiting timeout in milliseconds.
+ * @param interval - interval (delay) to check in milliseconds.
+ */
+async function waitForResult<T>(
+    func: (...args: any[]) => T | Promise<T>,
+    args: any[] = [],
     timeout: number = 10000,
     interval: number = 500
+): Promise<T> {
+    const startTime = Date.now();
 
-):Promise<any> {
-    const _timeout = setTimeout(async () => {
-        throw new Error(`${func.name} still hasn't returned result.`);
-    }, timeout);
+    while (Date.now() - startTime < timeout) {
+        const result = await func(...args);
+        if (result) {
+            return result;
+        }
 
-    let result;
-    do {
-        result = await func.apply(null, args);
-        setTimeout(() => {
-        }, interval);
-    } while (!result);
-    clearTimeout(_timeout);
-    return result;
+        await new Promise(resolve => setTimeout(resolve, interval));
+    }
+
+    throw new Error(`${func.name} still hasn't returned result.`);
 }
 
-export { waitForResult }
+export { waitForResult };
