@@ -34,4 +34,32 @@ async function waitForResult<T>(
     throw new Error(`${func.name} still hasn't returned result.`);
 }
 
-export { waitForResult };
+/**
+ * Custom waiter for a void function to complete successfully.
+ *
+ * @param func - function you want to wait for successful execution.
+ * @param args - optional arguments for function.
+ * @param timeout - waiting timeout in milliseconds.
+ * @param interval - interval delay between retries in milliseconds.
+ */
+async function waitForFunctionToComplete(
+    func: (...args: any[]) => void | Promise<void>,
+    args: any[] = [],
+    timeout: number = 10000,
+    interval: number = 500
+): Promise<void> {
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < timeout) {
+        try {
+            await func(...args);
+            return;
+        } catch {
+            await new Promise(resolve => setTimeout(resolve, interval));
+        }
+    }
+
+    throw new Error(`${func.name} hasn't completed successfully.`);
+}
+
+export { waitForResult, waitForFunctionToComplete };
