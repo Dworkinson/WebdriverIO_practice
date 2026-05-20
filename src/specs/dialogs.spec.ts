@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import DialogsPage from '@pages/dialogsPage/dialogs.page';
 import {randomString} from "@helpers/randomizer";
+import { dialogHandler } from '@helpers/dialogHandler';
 import * as consts from "@helpers/regExp.consts.json";
 
 
@@ -12,7 +13,7 @@ describe('Dialogs Page: ', async () => {
     it('could handle alert', async () => {
         expect((await DialogsPage.getDialogResponseText()).toLowerCase()).to.be.equal('waiting');
 
-        const handler = DialogsPage.handleDialog(true);
+        const handler = dialogHandler(true);
 
         await DialogsPage.clickAlert();
         const message = await handler;
@@ -23,7 +24,7 @@ describe('Dialogs Page: ', async () => {
     });
 
     it('could accept confirm', async () => {
-        const handler = DialogsPage.handleDialog(true);
+        const handler = dialogHandler(true);
 
         await DialogsPage.clickConfirm();
         const message = await handler;
@@ -33,7 +34,7 @@ describe('Dialogs Page: ', async () => {
     });
 
     it('could decline confirm', async () => {
-        const handler = DialogsPage.handleDialog(false);
+        const handler = dialogHandler(false);
 
         await DialogsPage.clickConfirm();
         const message = await handler;
@@ -49,7 +50,7 @@ describe('Dialogs Page: ', async () => {
             // spaces are stipped in prompts
             .trim();
 
-        const handler = DialogsPage.handleDialog(true, text);
+        const handler = dialogHandler(true, text);
 
         await DialogsPage.clickPrompt();
         const message = await handler;
@@ -59,7 +60,7 @@ describe('Dialogs Page: ', async () => {
     });
 
     it('could decline prompt', async () => {
-        const handler = DialogsPage.handleDialog(false);
+        const handler = dialogHandler(false);
         await DialogsPage.clickPrompt();
         const message = await handler;
         expect((await DialogsPage.getDialogResponseText()).toLowerCase()).to.be.empty;

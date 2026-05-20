@@ -44,30 +44,6 @@ class DialogsPage {
         await this.dialogResponseText.waitForDisplayed();
         return this.dialogResponseText.getText()
     }
-
-    // handle dialogs (alert, confirm, prompt) and returns dialog message
-    handleDialog(accept: boolean, text?: string): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            const handler = async (dialog: WebdriverIO.Dialog) => {
-                try {
-                    await(accept ? dialog.accept(text) : dialog.dismiss())
-                    resolve(dialog.message());
-                } catch (e) {
-                    reject(e);
-                } finally {
-                    browser.off('dialog', handler)
-                    clearTimeout(timeout);
-                }
-            }
-
-            const timeout = setTimeout(async () => {
-                browser.off('dialog', handler)
-                reject(new Error('Dialog was not handled'));
-            }, browser.options.waitforTimeout || 10000);
-
-            browser.on('dialog', handler);
-        });
-    }
 }
 
 export default new DialogsPage;
