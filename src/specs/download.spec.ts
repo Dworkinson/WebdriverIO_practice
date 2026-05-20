@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 import DownloadPage from "@pages/downloadPage/download.page";
+import { waitForResult } from "@helpers/waitForFunctionResult";
 
 const fileIds: string[] = [
     'some-file.json',
@@ -21,16 +22,12 @@ describe("Downloading files: ", async () => {
             const filePath = path.join(downloadDir, fileId);
 
             await DownloadPage.downloadFileByDataTestId(fileId);
-            await browser.waitUntil(() => {
-                return fs.existsSync(filePath);
-            });
 
+            await waitForResult(fs.existsSync, [filePath]);
             expect(fs.existsSync(filePath)).to.be.true;
 
             fs.unlinkSync(filePath);
-            await browser.waitUntil(() => {
-                return !fs.existsSync(filePath);
-            })
+            expect(fs.existsSync(filePath)).to.be.false;
         }
     });
 });
