@@ -21,7 +21,8 @@
     "slowTest": "wdio src/config/wdio.conf.ts --spec slow.spec.ts --ENV .env/.env.stage",
     "dialogsTest": "wdio src/config/wdio.conf.ts --spec dialogs.spec.ts --ENV .env/.env.stage",
     "jqueryTest": "wdio src/config/wdio.conf.ts --spec jquery.spec.ts --ENV .env/.env.stage",
-    "abTest": "wdio src/config/wdio.conf.ts --spec abTest.spec.ts --ENV .env/.env.stage"
+    "abTest": "wdio src/config/wdio.conf.ts --spec abTest.spec.ts --ENV .env/.env.stage",
+    "contextMenu": "wdio src/config/wdio.conf.ts --spec contextMenu.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
