@@ -6,7 +6,7 @@ class DisappearingElementsPage {
         await browser.url('/disappearing-elements');
     }
 
-    async getElementByName(name: string): Promise<ChainablePromiseElement> {
+    getElementByName(name: string): ChainablePromiseElement {
         //language=XPath
         return $(`//button[contains(text(), "${name}")]`);
     }
