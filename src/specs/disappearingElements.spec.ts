@@ -2,30 +2,51 @@ import { expect } from 'chai';
 
 import DisappearingElementsPage from '@pages/disappearingElementsPage/disappearingElements.page';
 
-const elemsNames = ["Inbox", "Sent", "Spam", "Important", "Starred"]
-
+//very synthetic case - potentially it is an email, so all elements should have good selectors, BUT
+// in case we don't know what elements will be on the page,
+// we can use object with test data (could be in some env-specific space)
+const elementsTestData = {
+    inbox: 'Inbox',
+    sent: 'Sent',
+    spam: 'Spam',
+    important: 'Important',
+    starred: 'Starred',
+    ignored: 'Ignored',
+    newFunc: 'New Function',
+    others: 'Others'
+    // "as const" assertion is used to make sure we could use ONLY EXISTING keys
+};
 
 describe('Disappearing Elements Page: ', async () => {
     it('could get messages quantity', async () => {
         await DisappearingElementsPage.open();
 
+        type ElementKey = keyof typeof elementsTestData;
 
-        const elems: {[key: string]: ChainablePromiseElement} = Object.fromEntries(
-            await Promise.all(
-                elemsNames.map(async (name) => {
-                    const elem = await DisappearingElementsPage.getElementByName(name);
-                    return [name, elem]
-                })
-            )
-        )
+        // creating an object with elements by their names in runtime,
+        // so we could use it in tests by "elements.name"
+        const elements = Object.fromEntries(
+            Object.entries(elementsTestData).map(([keyName, keyValue]) => [
+                keyName,
+                DisappearingElementsPage.getElementByName(keyValue)
+            ])
+            //using default TypeScript Record type, so we could use it in tests by "elements.name"
+            // see: https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
+        ) as Record<ElementKey, ChainablePromiseElement>;
 
-        const values = Object.values(elems);
-        for(const elem of values) {
-            const isExists = await elem.isExisting();
-
-            if(isExists) {
-                expect(await DisappearingElementsPage.getMsgQty(elem)).to.be.greaterThan(0);
-            }
+        if(await elements.inbox.isExisting()) {
+            console.log(await DisappearingElementsPage.getMsgQty(elements.inbox));
+            expect(await DisappearingElementsPage.getMsgQty(elements.inbox)).to.be.greaterThan(0);
         }
+
+        //case 1:
+        // get "sent" qty
+        // sent message
+        // assert "sent" qty is incremented
+
+        //case 2:
+        // if (newFunc.isExisting()) -> test new functional
+
+        //etc.
     })
 })
