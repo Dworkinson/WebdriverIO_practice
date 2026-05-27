@@ -28,6 +28,7 @@ describe('Forgot Password', async () => {
 
         expect(await ForgotPasswordPage.isConfirmationAlertDisplayed()).to.be.true;
         const msg = await waitForResult(getLatestMessageText, [testEmail]);
+        if(!msg) throw new Error('No message found');
         const url = getRedirectUrl(urlRegExp, msg);
 
         // in live conditions should get real url
