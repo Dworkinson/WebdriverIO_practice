@@ -9,6 +9,9 @@ type SliderConfig = {
     step: number;
 };
 
+type SlideMethod = 'click' | 'keyboard';
+
+
 class HorizontalSliderPage {
     // creating sliderConfig property to cache slider config and prevent unnecessary calls to its selector
     private sliderConfig?: SliderConfig;
@@ -65,6 +68,36 @@ class HorizontalSliderPage {
         }
     }
 
+    // just for training purposes
+    // would NEVER be used in real life because of its complexity, readability and flaky
+    private async moveSliderViaClick(position: number): Promise<void> {
+        const { min, max, step } = await this.getSliderConfig();
+        const sliderWidth = (await this.slider.getSize()).width;
+        const steps = Math.floor((max - min) / step);
+        const stepWidth = Math.floor(sliderWidth / steps);
+
+        const isCenterOnStep = (steps+1) % 2 !== 0;
+
+        if (isCenterOnStep) {
+            const centralStep = max / 2;
+
+            const stepsNeeded = (position - centralStep) / step;
+            const clickPosition = (stepsNeeded * stepWidth);
+
+            await this.slider.click({x: clickPosition});
+            return;
+        }
+
+        if(!isCenterOnStep) {
+            const centralPosition = max / 2;
+
+            const stepsNeeded = (position - centralPosition) / step;
+            const clickPosition = Math.floor(stepsNeeded * stepWidth);
+
+            await this.slider.click({x: clickPosition});
+        }
+    }
+
     private async positionValidator(position: number): Promise<void> {
         const { min, max, step } = await this.getSliderConfig();
 
@@ -77,7 +110,7 @@ class HorizontalSliderPage {
         }
     }
 
-    async moveSliderToPosition(position: number): Promise<void> {
+    async moveSliderToPosition(position: number, slideMethod: SlideMethod): Promise<void> {
         await this.positionValidator(position);
         await this.slider.waitForDisplayed();
 
@@ -85,14 +118,20 @@ class HorizontalSliderPage {
             slider.focus();
         }, await this.slider);
 
-        const currentPosition = await this.getRangeValue();
-        const { step } = await this.getSliderConfig();
-        const stepsToMove = Math.round((position - currentPosition) / step);
+        if(slideMethod === 'click') {
+            return this.moveSliderViaClick(position);
+        }
 
-        const direction: Direction = stepsToMove > 0 ? 'right' : 'left';
+        if(slideMethod == 'keyboard') {
+            const currentPosition = await this.getRangeValue();
+            const { step } = await this.getSliderConfig();
+            const stepsToMove = Math.round((position - currentPosition) / step);
 
-        for (let i = 0; i < Math.abs(stepsToMove); i++) {
-            await this.moveSliderViaKeyboard(direction);
+            const direction: Direction = stepsToMove > 0 ? 'right' : 'left';
+
+            for (let i = 0; i < Math.abs(stepsToMove); i++) {
+                await this.moveSliderViaKeyboard(direction);
+            }
         }
     }
 }
