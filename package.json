@@ -26,7 +26,8 @@
     "keyPressesTest": "wdio src/config/wdio.conf.ts --spec keyPresses.spec.ts --ENV .env/.env.stage",
     "disappearingElementsTest": "wdio src/config/wdio.conf.ts --spec disappearingElements.spec.ts --ENV .env/.env.stage",
     "pageCodes": "mocha src/specs/pageCodes.test.ts",
-    "horizontalSlider": "wdio src/config/wdio.conf.ts --spec horizontalSlider.spec.ts --ENV .env/.env.stage"
+    "horizontalSlider": "wdio src/config/wdio.conf.ts --spec horizontalSlider.spec.ts --ENV .env/.env.stage",
+    "hovers": "wdio src/config/wdio.conf.ts --spec hovers.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
