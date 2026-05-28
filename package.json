@@ -25,7 +25,8 @@
     "contextMenuTest": "wdio src/config/wdio.conf.ts --spec contextMenu.spec.ts --ENV .env/.env.stage",
     "keyPressesTest": "wdio src/config/wdio.conf.ts --spec keyPresses.spec.ts --ENV .env/.env.stage",
     "disappearingElementsTest": "wdio src/config/wdio.conf.ts --spec disappearingElements.spec.ts --ENV .env/.env.stage",
-    "pageCodes": "mocha src/specs/pageCodes.test.ts"
+    "pageCodes": "mocha src/specs/pageCodes.test.ts",
+    "horizontalSlider": "wdio src/config/wdio.conf.ts --spec horizontalSlider.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
