@@ -86,22 +86,14 @@ class HorizontalSliderPage {
     async moveSliderToPosition(position: number): Promise<void> {
         await this.positionValidator(position);
 
-        let currentPosition = await this.getRangeValue();
+        const currentPosition = await this.getRangeValue();
+        const { step } = await this.getSliderConfig();
+        const stepsToMove = Math.round((position - currentPosition) / step);
 
-        if (currentPosition < position) {
-            while (currentPosition < position) {
-                await this.moveSliderViaKeyboard('right');
-                currentPosition = await this.getRangeValue();
-            }
-            return;
-        }
+        const direction: Direction = stepsToMove > 0 ? 'right' : 'left';
 
-        if (currentPosition > position) {
-            while (currentPosition > position) {
-                await this.moveSliderViaKeyboard('left');
-                currentPosition = await this.getRangeValue();
-            }
-            return;
+        for (let i = 0; i < Math.abs(stepsToMove); i++) {
+            await this.moveSliderViaKeyboard(direction);
         }
     }
 }
