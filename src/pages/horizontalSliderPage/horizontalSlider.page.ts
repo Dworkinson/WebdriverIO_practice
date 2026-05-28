@@ -54,12 +54,6 @@ class HorizontalSliderPage {
     }
 
     private async moveSliderViaKeyboard(direction: Direction): Promise<void> {
-        await this.slider.waitForDisplayed();
-
-        await browser.execute((slider) => {
-            slider.focus();
-        }, await this.slider);
-
         switch (direction) {
             case 'left':
                 await browser.keys(Key.ArrowLeft);
@@ -85,6 +79,11 @@ class HorizontalSliderPage {
 
     async moveSliderToPosition(position: number): Promise<void> {
         await this.positionValidator(position);
+        await this.slider.waitForDisplayed();
+
+        await browser.execute((slider) => {
+            slider.focus();
+        }, await this.slider);
 
         const currentPosition = await this.getRangeValue();
         const { step } = await this.getSliderConfig();
