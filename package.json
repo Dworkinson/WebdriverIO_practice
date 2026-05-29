@@ -28,7 +28,8 @@
     "pageCodesTest": "mocha src/specs/pageCodes.test.ts",
     "horizontalSliderTest": "wdio src/config/wdio.conf.ts --spec horizontalSlider.spec.ts --ENV .env/.env.stage",
     "hoversTest": "wdio src/config/wdio.conf.ts --spec hovers.spec.ts --ENV .env/.env.stage",
-    "floatingMenuTest": "wdio src/config/wdio.conf.ts --spec floatingMenu.spec.ts --ENV .env/.env.stage"
+    "floatingMenuTest": "wdio src/config/wdio.conf.ts --spec floatingMenu.spec.ts --ENV .env/.env.stage",
+    "windowsTest": "wdio src/config/wdio.conf.ts --spec windows.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
