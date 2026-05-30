@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import HoversPage from "@pages/abTestPage/hovers.page";
+import HoversPage from "@pages/hoversPage/hovers.page";
 import { faker } from '@faker-js/faker';
 
 
