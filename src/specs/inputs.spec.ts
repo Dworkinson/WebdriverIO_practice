@@ -83,7 +83,9 @@ describe('Text inputs: ', () => {
 
     it('any text could be inserted', async () => {
         // site has actual bug - "output password" could be read as HTML element, so need to avoid characters < >
-        let text = randomString(consts.TEXT_INPUT.value, 15).replace(/[<>]/g, "");
+        let text = randomString(consts.TEXT_INPUT.value, 15)
+            .replace(/[<>]/g, "")
+            .trim();
 
         await WebInputsPage.fillInputText(text);
         await WebInputsPage.displayInputs();
