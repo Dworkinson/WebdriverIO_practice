@@ -30,6 +30,9 @@ describe('OTP: ', () => {
         await OtpPage.sendOtp(testEmail);
 
         const emailText = await waitForResult(getLatestMessageText, [testEmail]);
+        if (!emailText) {
+            throw new Error('OTP email not found');
+        }
         const otp = getOtpCode(otpRegExp, emailText);
         expect(otp).to.be.exist;
 
@@ -56,6 +59,9 @@ describe('OTP: ', () => {
         expect(infoMsg).to.contains(testEmail);
 
         const emailText = await waitForResult(getLatestMessageText, [testEmail]);
+        if (!emailText) {
+            throw new Error('OTP email not found');
+        }
         const otp = getOtpCode(otpRegExp, emailText);
         expect(otp).to.be.exist;
 

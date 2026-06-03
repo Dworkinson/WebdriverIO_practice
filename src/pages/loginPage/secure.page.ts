@@ -6,23 +6,23 @@ class SecurePage {
         await browser.url('/secure');
     }
 
-    private get logoutBtn(): Promise<WebdriverIO.Element> {
+    private get logoutBtn(): ChainablePromiseElement {
         return $('[class*="button"][href="/logout"]');
     }
 
-    private get username(): Promise<WebdriverIO.Element> {
+    private get username(): ChainablePromiseElement {
         return $('[id="username"]');
     }
 
     async clickOnLogoutBtn(): Promise<void> {
-        await (await this.logoutBtn).waitForDisplayed();
-        await (await this.logoutBtn).scrollIntoView();
-        await (await this.logoutBtn).click();
+        await this.logoutBtn.waitForDisplayed();
+        await this.logoutBtn.scrollIntoView();
+        await this.logoutBtn.click();
     }
 
     async getUsername(): Promise<string> {
-        await (await this.username).waitForDisplayed();
-        return (await this.username).getText();
+        await this.username.waitForDisplayed();
+        return this.username.getText();
     }
 }
 
