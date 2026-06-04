@@ -32,7 +32,8 @@
     "windowsTest": "wdio src/config/wdio.conf.ts --spec windows.spec.ts --ENV .env/.env.stage",
     "tooltipsTest": "wdio src/config/wdio.conf.ts --spec tooltips.spec.ts --ENV .env/.env.stage",
     "dynamicControlsTest": "wdio src/config/wdio.conf.ts --spec dynamicControls.spec.ts --ENV .env/.env.stage",
-    "dynamicLoadingTest": "wdio src/config/wdio.conf.ts --spec dynamicLoading.spec.ts --ENV .env/.env.stage"
+    "dynamicLoadingTest": "wdio src/config/wdio.conf.ts --spec dynamicLoading.spec.ts --ENV .env/.env.stage",
+    "entryAdTest": "wdio src/config/wdio.conf.ts --spec entryAd.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
