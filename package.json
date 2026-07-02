@@ -35,7 +35,8 @@
     "dynamicLoadingTest": "wdio src/config/wdio.conf.ts --spec dynamicLoading.spec.ts --ENV .env/.env.stage",
     "entryAdTest": "wdio src/config/wdio.conf.ts --spec entryAd.spec.ts --ENV .env/.env.stage",
     "exitIntentTest": "wdio src/config/wdio.conf.ts --spec exitIntent.spec.ts --ENV .env/.env.stage",
-    "logsTest": "wdio src/config/wdio.conf.ts --spec logs.spec.ts --ENV .env/.env.stage"
+    "logsTest": "wdio src/config/wdio.conf.ts --spec logs.spec.ts --ENV .env/.env.stage",
+    "playWheel": "wdio src/config/wdio.conf.ts --spec wheel.spec.ts --ENV .env/.env.stage"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
