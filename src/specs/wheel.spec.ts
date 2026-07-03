@@ -8,15 +8,11 @@ describe("WheelPage", async () => {
         await WheelGame.open();
         for(let i = 0; i < 10; i++) {
             await WheelGame.play();
-            // const color = await WheelPage.getColor();
-            // await WheelPage.clickColorBtn(color);
             expect(await WheelGame.isResultDisplayed()).to.be.false;
         }
         await WheelGame.reset();
         await WheelGame.play();
 
-        // const color = await WheelPage.getColor();
-        // await WheelPage.clickColorBtn(color);
         expect(await WheelGame.isResultDisplayed()).to.be.false;
     });
 });
